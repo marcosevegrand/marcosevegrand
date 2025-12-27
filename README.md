@@ -25,7 +25,7 @@
   </tr>
   <tr>
     <td style="padding: 10px 0;">
-      <strong>Looking to learn more:</strong><br>
+      <strong>Learning more about:</strong><br>
       <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes" height="30">
       <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" height="30">
       <img src="https://img.shields.io/badge/Vim_Motions-019733?style=for-the-badge&logo=vim&logoColor=white" alt="Vim Motions" height="30">
@@ -34,7 +34,7 @@
   </tr>
   <tr>
     <td style="padding: 10px 0;">
-      <strong>Current Deep Dives:</strong></br>
+      <strong>Areas of Interest:</strong></br>
       <code>Distributed Systems</code> • <code>Network Security</code> • <code>Cloud Infrastructure</code>
     </td>
   </tr>
@@ -51,8 +51,3 @@
 <div align="justify">
 When I'm not at my desk, I'm usually at the <b>gym</b> or making myself a <b>Baileys coffee</b>. I've also been making an effort to read more lately, mostly non-technical books and different genres just to keep my head clear and maintain a perspective outside of engineering.
 </div>
-
-## 📈 Lab Stats
-
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=marcosevegrand&layout=compact&theme=tokyonight&hide_border=true)
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=marcosevegrand&show_icons=true&theme=tokyonight&hide_border=true)
