@@ -28,14 +28,15 @@
       <strong>Learning more about:</strong><br>
       <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes" height="30">
       <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" height="30">
-      <img src="https://img.shields.io/badge/Vim_Motions-019733?style=for-the-badge&logo=vim&logoColor=white" alt="Vim Motions" height="30">
       <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" height="30">
     </td>
   </tr>
   <tr>
     <td style="padding: 10px 0;">
-      <strong>Areas of Interest:</strong></br>
-      <code>Distributed Systems</code> • <code>Network Security</code> • <code>Cloud Infrastructure</code>
+      <strong>Areas of Interest:</strong><br>
+      <img src="https://img.shields.io/badge/Distributed_Systems-4A90E2?style=for-the-badge&logoColor=white" alt="Distributed Systems" height="30">
+      <img src="https://img.shields.io/badge/Network_Security-F39C12?style=for-the-badge&logoColor=white" alt="Network Security" height="30">
+      <img src="https://img.shields.io/badge/Cloud_Infrastructure-27AE60?style=for-the-badge&logoColor=white" alt="Cloud Infrastructure" height="30">
     </td>
   </tr>
 </table>
