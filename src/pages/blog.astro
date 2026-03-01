@@ -1,0 +1,186 @@
+---
+import content from '../content/portfolio.json';
+import blogContent from '../content/blog.json';
+import '../styles/global.css';
+
+const { meta } = content;
+const { meta: blogMeta, hero: blogHero, sections: blogSections, emptyState, posts } = blogContent;
+
+const resolvedPosts = posts.map((post) => {
+  const slug = post.file.replace(/\.md$/i, '');
+  return {
+    ...post,
+    tags: Array.isArray(post.tags) ? post.tags : [],
+    slug
+  };
+});
+const allTags = Array.from(new Set(resolvedPosts.flatMap((post) => post.tags))).sort((a, b) => a.localeCompare(b));
+---
+
+<html lang={meta.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{`${blogMeta.title} · ${meta.title}`}</title>
+    <meta name="description" content={blogMeta.description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=Space+Mono&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body id="top">
+    <div class="ambient" aria-hidden="true">
+      <span></span>
+      <span></span>
+    </div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+
+    <main class="page-shell blog-page-shell">
+      <section class="section hero">
+        <p class="mono role">{blogHero.kicker}</p>
+        <h1 class="blog-hero-title">{blogHero.title}</h1>
+        <p class="hero-meta muted">
+          {blogHero.intro}
+        </p>
+        <p class="hero-work">
+          <a href="/" class="text-cta page-swipe-link" data-swipe="right">← {blogHero.backCtaLabel}</a>
+        </p>
+      </section>
+
+      <section class="section blog-list-section">
+        {allTags.length > 0 && (
+          <div class="blog-filters" aria-label={blogSections.filterLabel}>
+            <button type="button" class="blog-filter active" data-tag="all">All</button>
+            {allTags.map((tag) => (
+              <button type="button" class="blog-filter" data-tag={tag}>#{tag}</button>
+            ))}
+          </div>
+        )}
+
+        <div class="stacked-list" id="blogAllPosts">
+          {resolvedPosts.length > 0 ? (
+            resolvedPosts.map((post) => (
+              <article class="text-block blog-post-item" data-tags={post.tags.join(' ')}>
+                <p class="mono muted small">{post.date}</p>
+                <h3><a href={`/blog/${post.slug}`} class="text-link">{post.title}</a></h3>
+                <p class="muted">{post.summary}</p>
+                {post.tags.length > 0 && (
+                  <p class="blog-tags muted">{post.tags.map((tag) => `#${tag}`).join(' · ')}</p>
+                )}
+              </article>
+            ))
+          ) : (
+            <article class="text-block">
+              <p class="mono muted small">{emptyState.label}</p>
+              <h3>{emptyState.title}</h3>
+              <p class="muted">{emptyState.description}</p>
+            </article>
+          )}
+          <p class="muted blog-empty-filter" id="blogFilterEmpty" hidden>
+            No posts found for this tag yet.
+          </p>
+        </div>
+      </section>
+
+      <section class="section page-back-top">
+        <p class="hero-work">
+          <a href="#top" class="text-cta">Back to top ↑</a>
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const progressBar = document.getElementById('scrollProgressBar');
+      const updateProgress = () => {
+        if (!progressBar) return;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = max > 0 ? window.scrollY / max : 0;
+        progressBar.style.transform = `scaleX(${Math.min(Math.max(ratio, 0), 1)})`;
+      };
+
+      let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
+      let currentX = targetX;
+      let currentY = targetY;
+
+      const updateGlow = (x: number, y: number) => {
+        document.documentElement.style.setProperty('--cursor-x', `${x}px`);
+        document.documentElement.style.setProperty('--cursor-y', `${y}px`);
+      };
+
+      const animateGlow = () => {
+        currentX += (targetX - currentX) * 0.03;
+        currentY += (targetY - currentY) * 0.03;
+        updateGlow(currentX, currentY);
+        requestAnimationFrame(animateGlow);
+      };
+
+      window.addEventListener('mousemove', (event) => {
+        targetX = event.clientX;
+        targetY = event.clientY;
+      });
+
+      window.addEventListener('mouseleave', () => {
+        targetX = window.innerWidth / 2;
+        targetY = window.innerHeight / 2;
+      });
+
+      animateGlow();
+      updateProgress();
+      window.addEventListener('scroll', updateProgress, { passive: true });
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const swipeLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a.page-swipe-link[data-swipe]'));
+
+      swipeLinks.forEach((link) => {
+        link.addEventListener('click', (event: MouseEvent) => {
+          if (prefersReducedMotion) return;
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          const href = link.getAttribute('href');
+          if (!href || href.startsWith('#')) return;
+          const targetUrl = new URL(href, window.location.href);
+          if (targetUrl.origin !== window.location.origin) return;
+          const swipeDirection = link.getAttribute('data-swipe') === 'right' ? 'right' : 'left';
+          event.preventDefault();
+          document.body.classList.add(swipeDirection === 'right' ? 'page-swipe-right' : 'page-swipe-left');
+          window.setTimeout(() => {
+            window.location.href = targetUrl.href;
+          }, 360);
+        });
+      });
+
+      const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.blog-filter[data-tag]'));
+      const allPosts = Array.from(document.querySelectorAll<HTMLElement>('.blog-post-item'));
+      const filterEmpty = document.getElementById('blogFilterEmpty');
+
+      const applyTagFilter = (tag: string) => {
+        let visibleCount = 0;
+        allPosts.forEach((post) => {
+          const postTags = post.getAttribute('data-tags') || '';
+          const visible = tag === 'all' || postTags.split(' ').includes(tag);
+          post.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+
+        if (filterEmpty instanceof HTMLElement) {
+          filterEmpty.hidden = visibleCount > 0;
+        }
+
+        filterButtons.forEach((button) => {
+          const buttonTag = button.getAttribute('data-tag') || 'all';
+          button.classList.toggle('active', buttonTag === tag);
+        });
+      };
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const tag = button.getAttribute('data-tag') || 'all';
+          applyTagFilter(tag);
+        });
+      });
+    </script>
+  </body>
+</html>

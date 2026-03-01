@@ -1,0 +1,121 @@
+---
+import { marked } from 'marked';
+import portfolioContent from '../../content/portfolio.json';
+import blogContent from '../../content/blog.json';
+import '../../styles/global.css';
+
+const { meta } = portfolioContent;
+
+export function getStaticPaths() {
+  const posts = Array.isArray(blogContent.posts) ? blogContent.posts : [];
+  const postFiles = import.meta.glob('../../content/posts/*.md', {
+    query: '?raw',
+    import: 'default',
+    eager: true
+  }) as Record<string, string>;
+
+  return posts.map((post) => ({
+    params: { slug: post.file.replace(/\.md$/i, '') },
+    props: {
+      post,
+      markdown: postFiles[`../../content/posts/${post.file}`] || ''
+    }
+  }));
+}
+
+const { post, markdown } = Astro.props;
+const postTags = Array.isArray(post.tags) ? post.tags : [];
+const parsed = marked.parse(markdown || '');
+const html = typeof parsed === 'string' ? parsed : '';
+---
+
+<html lang={meta.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{`${post.title} · Blog · ${meta.title}`}</title>
+    <meta name="description" content={post.summary} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=Space+Mono&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body id="top">
+    <div class="ambient" aria-hidden="true">
+      <span></span>
+      <span></span>
+    </div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+
+    <main class="page-shell">
+      <section class="section hero blog-post-hero">
+        <p class="mono role">Post</p>
+        <h1>{post.title}</h1>
+        <div class="blog-post-meta-row">
+          <p class="hero-meta muted">{post.date}</p>
+          <p class="hero-work">
+            <a href="/blog" class="text-cta">← Back to blog</a>
+          </p>
+        </div>
+        {postTags.length > 0 && (
+          <p class="blog-tags muted blog-post-tags">{postTags.map((tag) => `#${tag}`).join(' · ')}</p>
+        )}
+      </section>
+
+      <section class="section blog-post-content">
+        <div class="prose-markdown" set:html={html}></div>
+      </section>
+
+      <section class="section page-back-top">
+        <p class="hero-work">
+          <a href="#top" class="text-cta">Back to top ↑</a>
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const progressBar = document.getElementById('scrollProgressBar');
+      const updateProgress = () => {
+        if (!progressBar) return;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = max > 0 ? window.scrollY / max : 0;
+        progressBar.style.transform = `scaleX(${Math.min(Math.max(ratio, 0), 1)})`;
+      };
+
+      let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
+      let currentX = targetX;
+      let currentY = targetY;
+
+      const updateGlow = (x: number, y: number) => {
+        document.documentElement.style.setProperty('--cursor-x', `${x}px`);
+        document.documentElement.style.setProperty('--cursor-y', `${y}px`);
+      };
+
+      const animateGlow = () => {
+        currentX += (targetX - currentX) * 0.03;
+        currentY += (targetY - currentY) * 0.03;
+        updateGlow(currentX, currentY);
+        requestAnimationFrame(animateGlow);
+      };
+
+      window.addEventListener('mousemove', (event) => {
+        targetX = event.clientX;
+        targetY = event.clientY;
+      });
+
+      window.addEventListener('mouseleave', () => {
+        targetX = window.innerWidth / 2;
+        targetY = window.innerHeight / 2;
+      });
+
+      animateGlow();
+      updateProgress();
+      window.addEventListener('scroll', updateProgress, { passive: true });
+
+    </script>
+  </body>
+</html>

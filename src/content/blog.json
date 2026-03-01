@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Blog",
+    "description": "Technical notes, engineering write-ups, and project insights."
+  },
+  "hero": {
+    "kicker": "Writing",
+    "title": "Blog",
+    "intro": "Notes on software engineering, systems design, and lessons from building products.",
+    "backCtaLabel": "Back to portfolio"
+  },
+  "sections": {
+    "filterLabel": "Filter posts by tag"
+  },
+  "emptyState": {
+    "label": "Coming soon",
+    "title": "First post in progress",
+    "description": "I’m preparing technical articles around backend architecture, reliability, and security-focused development."
+  },
+  "posts": [
+    {
+      "title": "A case against age verification",
+      "date": "Feb 2026",
+      "summary": "Age verification is mass surveillance sold as parenting.",
+      "file": "a-case-against-age-verification.md",
+      "tags": ["opinion", "privacy", "security"]
+    }
+  ]
+}

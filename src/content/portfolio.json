@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "lang": "en",
+    "title": "Marco Sèvegrand",
+    "description": "I build fast, reliable software products that solve real-world problems."
+  },
+  "brand": {
+    "logoText": "marcosevegrand"
+  },
+  "nav": [
+    { "label": "About me", "href": "#about" },
+    { "label": "Experience", "href": "#experience" },
+    { "label": "Education", "href": "#education" },
+    { "label": "Certs", "href": "#certifications" },
+    { "label": "Projects", "href": "#projects" }
+  ],
+  "hero": {
+    "role": "Software Engineer",
+    "name": "Marco Sèvegrand",
+    "tagline": "I build fast, reliable software products that solve real-world problems.",
+    "location": "Braga, Portugal",
+    "timezone": "Europe/Lisbon",
+    "primaryCta": { "label": "See my work ↓", "href": "#projects" },
+    "secondaryCta": { "label": "Download CV", "href": "/cv.pdf" },
+    "links": [
+      { "label": "Email", "href": "mailto:contact@marcosev.com", "text": "contact@marcosev.com" },
+      { "label": "GitHub", "href": "https://github.com/marcosevegrand", "text": "github.com/marcosevegrand" },
+      { "label": "LinkedIn", "href": "https://linkedin.com/in/marcosevegrand", "text": "linkedin.com/in/marcosevegrand" }
+    ]
+  },
+  "sections": {
+    "aboutTitle": "About me",
+    "experienceTitle": "Experience",
+    "educationTitle": "Education",
+    "certificationsTitle": "Certifications",
+    "projectsTitle": "Projects"
+  },
+  "about": [
+    "I design and build **reliable software systems** with a strong focus on long-term architecture and infrastructure quality.",
+    "My main domains are <u>systems design</u>, <u>cybersecurity</u>, and <u>production architecture</u> with emphasis on resilience, observability, and scalability.",
+    "I work primarily with **C** and **Go** for backend and low-level components, and use <u>Kubernetes</u> to deploy, orchestrate, and operate services in cloud environments."
+  ],
+  "experience": [
+    {
+      "title": "Full-Stack Developer",
+      "org": "IDRYL Technologies (independent contractor)",
+      "date": "March 2026 — Present",
+      "points": [
+        "Working as a **self-employed developer** on-site with the IDRYL Technologies team.",
+        "Designing and developing a **fitness tracker PWA** (SvelteKit + Postgres)."
+      ]
+    },
+    {
+      "title": "Store Associate and Web Developer",
+      "org": "Biobrassica",
+      "date": "Feb 2026 — Present",
+      "points": [
+        "Assisting **in-store operations** and providing daily customer support in a unique retail environment.",
+        "Acting as the **solo developer** for the company website, delivering and maintaining the web presence independently.",
+        "Managing and improving Biobrassica’s **social media presence** with consistent content and brand communication."
+      ]
+    },
+    {
+      "title": "Math & Physics Tutor",
+      "org": "Self-employed",
+      "date": "Sept 2025 — Present",
+      "points": [
+        "Providing **one-on-one tutoring** in mathematics and physics for high-school students.",
+        "Creating **tailored study approaches** to help students build confidence, stay consistent, and prepare for exams."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "M.Sc. Cybersecurity",
+      "institution": "University of Minho, Braga, Portugal",
+      "date": "2026 — 2028",
+      "grade": "[TBD]",
+      "details": [
+        "Threat analysis.",
+        "Cryptography.",
+        "Secure systems design."
+      ]
+    },
+    {
+      "degree": "B.Sc. Software Engineering",
+      "institution": "University of Minho, Braga, Portugal",
+      "date": "2023 — 2026",
+      "grade": "16",
+      "details": [
+        "Algorithms and data structures.",
+        "Computer networks.",
+        "Database systems."
+      ]
+    },
+    {
+      "degree": "Secondary Education — Sciences and Technologies",
+      "institution": "Esc. Sec. Fernão de Magalhães, Chave, Portugal",
+      "date": "2020 — 2023",
+      "grade": "19.6",
+      "details": [
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "id": "(NOT YET OBTAINED)",
+      "issuer": "Amazon Web Services",
+      "name": "AWS Solutions Architect Associate",
+      "date": "Expected: April 2026",
+      "badge": {
+        "src": "/badges/AWS Solutions Architect Associate.webp",
+        "alt": "AWS Solutions Architect Associate Badge"
+      }
+    },
+    {
+      "id": "C1827928",
+      "issuer": "Cambridge Assessment English",
+      "name": "English C1 Advanced",
+      "date": "May 2023",
+      "badge": {
+        "src": "/badges/English C1 Advanced.png",
+        "alt": "English C1 Advanced Badge"
+      }
+    }
+  ],
+  "projects": [
+    {
+      "year": "2025",
+      "name": "Space Mission Communication Protocols",
+      "stack": "Go · Networks · TCP/UDP Protocols · React",
+      "desc": "Graded 20/20 in the Computer Networks course",
+      "images": [
+        {
+          "src": "/projects/space-mission/img1.png",
+          "alt": "Preview 1"
+        },
+        {
+          "src": "/projects/space-mission/img2.png",
+          "alt": "Preview 2"
+        },
+        {
+          "src": "/projects/space-mission/img3.png",
+          "alt": "Preview 3"
+        }
+      ],
+      "highlights": [
+        "Implemented a reliable UDP with **forward error correction** and **packet retransmission**.",
+        "Achieved Lighthouse performance score of <u>98</u>.",
+        "Design a **intuitive** and **responsive** UI dashboard."
+      ],
+      "demo": "https://example.com/project-3",
+      "github": "https://github.com/marcosevegrand/space-mission"
+    }
+  ],
+  "testimonials": []
+}
