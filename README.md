@@ -17,6 +17,10 @@
 - <a href="https://athletros.com">**Athletros PWA**</a> — a gym tracker with offline-first usage, responsive flows, and core training tracking features.
 - <a href="">**Biobrassica Website**</a> — responsible for delivery and ongoing maintenance of the company website.
 
+## Past Work
+
+- <a href="https://marcosev.com">**Personal Website**</a> — made my own personal website from scratch.
+
 ## Stack
 
 <p>
