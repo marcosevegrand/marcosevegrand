@@ -23,7 +23,7 @@
 			now looking to go deeper into the parts of the craft that reward rigor and long-term
 			thinking, especially <strong class="about-emphasis">software architecture</strong> and
 			<strong class="about-emphasis">cybersecurity</strong>. I want to design systems that are
-			clear, resilient, and secure by default.
+			<span class="about-underline">clear, resilient, and secure by default</span>.
 		</p>
 	</div>
 </SectionReveal>

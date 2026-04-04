@@ -53,6 +53,14 @@
 		return (entry.details?.length ?? 0) > 0;
 	}
 
+	function hasKeywords(entry: TimelineEntry) {
+		return (entry.keywords?.length ?? 0) > 0;
+	}
+
+	function usesSeparateOrgLine(entry: TimelineEntry) {
+		return entry.type === 'course' || entry.type === 'certification';
+	}
+
 	let filtered = $derived(
 		activeFilter === 'featured'
 			? timeline.filter((entry) => entry.featured)
@@ -97,54 +105,49 @@
 						<span class="timeline-type" style="color: {typeColors[entry.type]}">{typeLabels[entry.type]}</span>
 					</div>
 
-					{#if entry.type === 'certification' || entry.type === 'course'}
-						<div class="cert-row">
-							{#if entry.badge}
-								<img
-									src={entry.badge.src}
-									alt={entry.badge.alt}
-									loading="lazy"
-									width="40"
-									height="40"
-									class="cert-badge"
-								/>
+					{#if usesSeparateOrgLine(entry)}
+						<h3 class="timeline-title timeline-title-compact">{entry.title}</h3>
+						<p class="timeline-org muted">
+							{#if entry.orgHref}
+								<a href={entry.orgHref} target="_blank" rel="noopener noreferrer" class="timeline-org-link">{entry.org}</a>
+							{:else}
+								{entry.org}
 							{/if}
-							<div>
-								<h3 class="timeline-title">{entry.title}</h3>
-								<p class="timeline-org muted">
-									{#if entry.orgHref}
-										<a href={entry.orgHref} target="_blank" rel="noopener noreferrer" class="timeline-org-link">{entry.org}</a>
-									{:else}
-										{entry.org}
-									{/if}
-								</p>
-								{#if entry.summary}
-									<p class="timeline-summary muted">{entry.summary}</p>
-								{/if}
-								{#if entryReference(entry) && entryReferenceLabel(entry)}
-									<p class="timeline-grade">{entryReferenceLabel(entry)}: {entryReference(entry)}</p>
-								{/if}
-							</div>
-						</div>
+						</p>
 					{:else}
-						<h3 class="timeline-title">{entry.title} <span class="timeline-at">@ {#if entry.orgHref}<a href={entry.orgHref} target="_blank" rel="noopener noreferrer" class="timeline-org-link">{entry.org}</a>{:else}{entry.org}{/if}</span></h3>
-						{#if entry.summary}
-							<p class="timeline-summary muted">{entry.summary}</p>
-						{/if}
-						{#if entry.grade}
-							<p class="timeline-grade">Grade: {entry.grade}</p>
-						{/if}
+						<h3 class="timeline-title">
+							{entry.title}
+							<span class="timeline-at">@</span>
+							{#if entry.orgHref}
+								<a href={entry.orgHref} target="_blank" rel="noopener noreferrer" class="timeline-org-link timeline-org-inline">{entry.org}</a>
+							{:else}
+								<span class="timeline-org-inline">{entry.org}</span>
+							{/if}
+						</h3>
+					{/if}
+					{#if hasKeywords(entry)}
+						<div class="timeline-keywords" aria-label="Keywords">
+							{#each entry.keywords as keyword (keyword)}
+								<span class="timeline-keyword">{keyword}</span>
+							{/each}
+						</div>
+					{/if}
+					{#if entryReference(entry) && entryReferenceLabel(entry)}
+						<p class="timeline-grade">{entryReferenceLabel(entry)}: {entryReference(entry)}</p>
+					{/if}
+					{#if entry.grade}
+						<p class="timeline-grade">Grade: {entry.grade}</p>
+					{/if}
 
-						{#if hasDetails(entry)}
-							<details class="timeline-details">
-								<summary class="details-toggle">Details</summary>
-								<ul class="details-list">
-									{#each entry.details ?? [] as detail (detail)}
-										<li>{detail}</li>
-									{/each}
-								</ul>
-							</details>
-						{/if}
+					{#if hasDetails(entry)}
+						<details class="timeline-details">
+							<summary class="details-toggle">Details</summary>
+							<ul class="details-list">
+								{#each entry.details ?? [] as detail (detail)}
+									<li>{detail}</li>
+								{/each}
+							</ul>
+						</details>
 					{/if}
 				</div>
 			</div>
@@ -247,19 +250,37 @@
 	}
 
 	.timeline-title {
-		font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		column-gap: 0.35rem;
+		row-gap: 0.05rem;
+		font-size: clamp(1.34rem, 2.55vw, 1.86rem);
 		margin: 0;
 		font-family: var(--font-sans);
 		font-weight: 700;
-		line-height: 1.08;
+		line-height: 1.16;
+	}
+
+	.timeline-title-compact {
+		font-size: clamp(1.12rem, 2vw, 1.46rem);
+	}
+
+	.timeline-org {
+		margin: 0;
+		font-size: 0.94rem;
+		font-family: var(--font-sans);
 	}
 
 	.timeline-at {
-		font-size: 0.55em;
-		font-weight: 500;
 		color: var(--muted);
-		letter-spacing: 0;
-		font-family: var(--font-sans);
+		font-weight: 500;
+	}
+
+	.timeline-org-inline {
+		color: var(--muted);
+		font-weight: 450;
+		font-size: 0.72em;
 	}
 
 	.timeline-org-link {
@@ -276,9 +297,24 @@
 		text-decoration-color: var(--accent);
 	}
 
-	.timeline-summary {
-		margin: 0;
-		font-size: 1rem;
+	.timeline-keywords {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		margin-top: 0.1rem;
+	}
+
+	.timeline-keyword {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.22rem 0.55rem;
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--muted) 70%, var(--surface));
+		color: var(--bg);
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
 		font-family: var(--font-sans);
 	}
 
@@ -293,32 +329,6 @@
 		margin: 0;
 		font-family: var(--font-sans);
 		font-size: 1rem;
-	}
-
-	/* Certification row */
-	.cert-row {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.cert-badge {
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		object-fit: cover;
-		flex-shrink: 0;
-	}
-
-	.cert-row h3 {
-		font-size: clamp(1.1rem, 2vw, 1.4rem);
-		font-family: var(--font-sans);
-	}
-
-	.cert-row p {
-		margin: 0;
-		font-size: 0.94rem;
-		font-family: var(--font-sans);
 	}
 
 	/* Expandable details */

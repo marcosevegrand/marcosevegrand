@@ -15,12 +15,11 @@ export interface TimelineEntry {
 	org: string;
 	orgHref?: string;
 	featured?: boolean;
-	summary: string;
+	keywords: string[];
 	details?: string[];
 	grade?: string;
 	certificationId?: string;
 	courseId?: string;
-	badge?: { src: string; alt: string };
 }
 
 export interface Project {
@@ -96,34 +95,18 @@ export const techStack: TechStackItem[] = [
 export const projects: Project[] = [
 	{
 		year: '2026',
-		name: 'Athletros',
+		name: 'App Name',
 		summary:
-			'A fitness tracking progressive web app with offline-first data sync, workout programming, and analytics dashboards built for a personal-training studio.',
+			'...',
 		stack: ['SvelteKit', 'Postgres', 'PWA', 'Chart.js'],
-		preview: { src: '/projects/athletros.webp', alt: 'Athletros project preview' },
-		demo: 'https://athletros.com'
+		preview: { src: '/projects/appPicture.webp', alt: 'App project preview' },
+		demo: 'https://example.com'
 	}
 ];
 
 // ─── Timeline ───
 
 export const timeline: TimelineEntry[] = [
-	{
-		id: 'idryl-full-stack-dev',
-		type: 'work' as const,
-		date: 'Mar 2026 — Present',
-		sortDate: 202603,
-		title: 'Full-Stack Developer',
-		org: 'IDRYL Technologies (partnership)',
-		orgHref: 'https://www.idryl.com/',
-		featured: false,
-		summary:
-			'Building a healthcare PWA with production-ready backend and data flows.',
-		details: [
-			'Working as a self-employed developer on-site with the IDRYL Technologies team.',
-			'Designing and developing a healthcare PWA with Next.js and Postgres.'
-		]
-	},
 	{
 		id: 'biobrassica-store-web-dev',
 		type: 'work' as const,
@@ -133,12 +116,10 @@ export const timeline: TimelineEntry[] = [
 		org: 'Biobrassica',
 		orgHref: 'https://www.biobrassica.pt/',
 		featured: true,
-		summary:
-			'Balancing daily operations with ownership of the company web presence and communication.',
+		keywords: ['Retail Operations', 'Customer Support', 'Full-Stack Development'],
 		details: [
 			'Assisting in-store operations and providing daily customer support in a unique retail environment.',
-			'Acting as the solo developer for the company website, delivering and maintaining the web presence independently.',
-			"Managing and improving Biobrassica's social media presence with consistent content and brand communication."
+			'Acting as the solo developer for the company website, delivering and maintaining the web presence independently.'
 		]
 	},
 	{
@@ -149,8 +130,7 @@ export const timeline: TimelineEntry[] = [
 		title: 'Math & Physics Tutor',
 		org: 'Self-employed',
 		featured: true,
-		summary:
-			'Helping students build stronger study systems and more confidence around technical subjects.',
+		keywords: ['1:1 Tutoring', 'Mathematics', 'Physics', 'Exam Preparation'],
 		details: [
 			'Providing one-on-one tutoring in mathematics and physics for high-school students.',
 			'Creating tailored study approaches to help students build confidence, stay consistent, and prepare for exams.'
@@ -161,15 +141,18 @@ export const timeline: TimelineEntry[] = [
 	{
 		id: 'msc-cybersecurity',
 		type: 'education' as const,
-		date: '2026 — 2028',
+		date: 'NOT YET STARTED',
 		sortDate: 202609,
 		title: 'M.Sc. Cybersecurity',
 		org: 'University of Minho',
 		orgHref: 'https://www.uminho.pt/EN/',
 		featured: true,
-		summary: 'Graduate work centered on secure systems, analysis, and defensive design.',
-		details: ['Threat analysis.', 'Cryptography.', 'Secure systems design.'],
-		grade: 'TBD'
+		keywords: ['Cybersecurity hands-on', 'Network security', 'Cryptography', 'Incident management'],
+		details: [
+			'Hands-on labs in network security and traffic analysis to simulate real cyberattack scenarios.',
+			'Advanced courses in cryptography, incident management, and intrusion tolerance focusing on software security.',
+			'Specialized cybersecurity seminars, digital forensics, and IoT security.'
+		],
 	},
 	{
 		id: 'bsc-software-engineering',
@@ -180,8 +163,7 @@ export const timeline: TimelineEntry[] = [
 		org: 'University of Minho',
 		orgHref: 'https://www.uminho.pt/EN/',
 		featured: true,
-		summary:
-			'Strong foundation across software architecture, core computer science, and delivery discipline.',
+		keywords: ['Software Architecture', 'Networks', 'Algorithms', 'Distributed Systems'],
 		details: [
 			'Algorithms and data structures.',
 			'Computer networks.',
@@ -189,41 +171,36 @@ export const timeline: TimelineEntry[] = [
 		],
 		grade: '16'
 	},
-
-
 	{
-		id: 'aws-solutions-architect-associate',
-		type: 'certification' as const,
-		date: 'Expected: June 2026',
-		sortDate: 202606,
-		title: 'AWS Solutions Architect Associate',
-		org: 'Amazon Web Services',
+		id: 'secondary-education',
+		type: 'education' as const,
+		date: 'Sept 2019 — Jun 2023',
+		sortDate: 201909,
+		title: 'Secondary Education',
+		org: 'Escola Secundária Fernão de Magalhães',
+		orgHref: 'https://aefmagalhaes.pt/',
 		featured: false,
-		summary: '',
-		details: [],
-		certificationId: 'AWS-SAA',
-		badge: {
-			src: '/badges/AWS Solutions Architect Associate.webp',
-			alt: 'AWS Solutions Architect Associate Badge'
-		}
+		keywords: ['Science & Technology', 'Mathematics', 'Physics', 'Biology'],
+		grade: '19.6'
 	},
+
+
 	{
-		id: 'react-complete-guide',
+		id: 'learning-kubernetes-linkedin',
 		type: 'course' as const,
-		date: 'Jan 2025',
-		sortDate: 202501,
-		title: 'React - The Complete Guide 2025',
-		org: 'Udemy',
-		orgHref: 'https://www.udemy.com/',
+		date: 'Feb 2026',
+		sortDate: 202602,
+		title: 'Learning Kubernetes',
+		org: 'LinkedIn',
+		orgHref: 'https://www.linkedin.com/learning/',
 		featured: false,
-		summary:
-			'Comprehensive training on modern React fundamentals, component architecture, hooks, and state management.',
+		keywords: ['Kubernetes', 'Container Orchestration', 'Pods & Deployments', 'Cluster Networking'],
 		details: [
-			'Built production-style components with reusable patterns and clear state boundaries.',
-			'Covered hooks, side effects, forms, routing, and data flow in modern React applications.',
-			'Focused on writing maintainable UI code rather than just finishing toy examples.'
+			'Covered the core Kubernetes model, including pods, deployments, services, and cluster architecture.',
+			'Learned how containerized applications are scheduled, exposed, and managed in a Kubernetes environment.',
+			'Focused on practical orchestration concepts rather than basic container usage alone.'
 		],
-		courseId: 'UDEMY-REACT-2025'
+		courseId: '6c8b28d6f4f8050b76bc371cd835ab70d36bb18bbc52af879c9ab202b25ff4d4'
 	},
 	{
 		id: 'english-c1-advanced',
@@ -233,12 +210,8 @@ export const timeline: TimelineEntry[] = [
 		title: 'English C1 Advanced',
 		org: 'Cambridge Assessment English',
 		featured: true,
-		summary: '',
+		keywords: ['C1 English', 'Fluent', 'Versatile'],
 		details: [],
-		certificationId: 'CAMBRIDGE-C1',
-		badge: {
-			src: '/badges/English C1 Advanced.png',
-			alt: 'English C1 Advanced Badge'
-		}
+		certificationId: 'C1827928'
 	}
 ].sort((a, b) => b.sortDate - a.sortDate);
