@@ -1,24 +1,31 @@
 {
   "name": "marcosevegrand-portfolio",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.0",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.0.0"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
-    "@astrojs/react": "^4.3.0",
-    "@tailwindcss/vite": "^4.1.0",
-    "astro": "^5.2.0",
-    "framer-motion": "^12.4.2",
-    "marked": "^15.0.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwindcss": "^4.1.0",
-    "typescript": "^5.9.3"
+    "developer-icons": "^6.0.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "theme-toggles": "^4.10.1"
   }
 }
