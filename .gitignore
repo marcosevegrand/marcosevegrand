@@ -7,3 +7,10 @@ dist/
 *local*
 build/
 .svelte-kit/
+static/cv/*.aux
+static/cv/*.log
+static/cv/*.out
+static/cv/*.toc
+static/cv/*.fls
+static/cv/*.fdb_latexmk
+static/cv/*.synctex.gz

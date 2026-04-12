@@ -39,8 +39,6 @@ export interface TechStackItem {
 		| 'bash'
 		| 'github'
 		| 'docker'
-		| 'kubernetes'
-		| 'aws'
 		| 'azure';
 	label: string;
 }
@@ -69,7 +67,7 @@ export const hero = {
 	name: 'Marco Sèvegrand',
 	location: 'Braga, Portugal',
 	timezone: 'Europe/Lisbon',
-	cvHref: '/cv.pdf',
+	cvHref: '/cv/cv.pdf',
 	socials: [
 		{ icon: 'github', href: 'https://github.com/marcosevegrand', label: 'GitHub' },
 		{ icon: 'linkedin', href: 'https://linkedin.com/in/marcosevegrand', label: 'LinkedIn' },
@@ -81,12 +79,10 @@ export const hero = {
 
 export const techStack: TechStackItem[] = [
 	{ id: 'go', label: 'Go' },
-	{ id: 'git', label: 'Git' },
 	{ id: 'bash', label: 'Bash' },
+	{ id: 'git', label: 'Git' },
 	{ id: 'github', label: 'GitHub' },
 	{ id: 'docker', label: 'Docker' },
-	{ id: 'kubernetes', label: 'Kubernetes' },
-	{ id: 'aws', label: 'AWS' },
 	{ id: 'azure', label: 'Azure' }
 ];
 
@@ -138,22 +134,22 @@ export const timeline: TimelineEntry[] = [
 	},
 
 
-	{
-		id: 'msc-cybersecurity',
-		type: 'education' as const,
-		date: 'NOT YET STARTED',
-		sortDate: 202609,
-		title: 'M.Sc. Cybersecurity',
-		org: 'University of Minho',
-		orgHref: 'https://www.uminho.pt/EN/',
-		featured: true,
-		keywords: ['Cybersecurity hands-on', 'Network security', 'Cryptography', 'Incident management'],
-		details: [
-			'Hands-on labs in network security and traffic analysis to simulate real cyberattack scenarios.',
-			'Advanced courses in cryptography, incident management, and intrusion tolerance focusing on software security.',
-			'Specialized cybersecurity seminars, digital forensics, and IoT security.'
-		],
-	},
+	// {
+	// 	id: 'msc-cybersecurity',
+	// 	type: 'education' as const,
+	// 	date: 'NOT YET STARTED',
+	// 	sortDate: 202609,
+	// 	title: 'M.Sc. Cybersecurity',
+	// 	org: 'University of Minho',
+	// 	orgHref: 'https://www.uminho.pt/EN/',
+	// 	featured: true,
+	// 	keywords: ['Cybersecurity hands-on', 'Network security', 'Cryptography', 'Incident management'],
+	// 	details: [
+	// 		'Hands-on labs in network security and traffic analysis to simulate real cyberattack scenarios.',
+	// 		'Advanced courses in cryptography, incident management, and intrusion tolerance focusing on software security.',
+	// 		'Specialized cybersecurity seminars, digital forensics, and IoT security.'
+	// 	],
+	// },
 	{
 		id: 'bsc-software-engineering',
 		type: 'education' as const,

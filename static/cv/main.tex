@@ -1,0 +1,168 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1.45cm]{geometry}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+
+\setmainfont{TeX Gyre Termes}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\urlstyle{same}
+\raggedright
+\raggedbottom
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{0pt}
+
+\definecolor{ink}{HTML}{111827}
+\definecolor{muted}{HTML}{4B5563}
+
+\hypersetup{
+	colorlinks=true,
+	urlcolor=ink,
+	linkcolor=ink,
+	pdfauthor={Marco S\`evegrand},
+	pdftitle={Marco S\`evegrand - Curriculum Vitae}
+}
+
+\titleformat{\section}{\vspace{0.45em}\large\bfseries\color{ink}}{}{0pt}{}[\color{ink}\titlerule\vspace{0.2em}]
+\titlespacing*{\section}{0pt}{0.55em}{0.2em}
+
+\newcommand{\resumeItem}[1]{
+	\item\small{#1}
+}
+
+\newcommand{\resumeSubheading}[4]{
+	\item
+		\begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+			\textbf{#1} & {\small #2} \\
+			\textit{\small #3} & \textit{\small #4} \\
+		\end{tabular*}\vspace{-0.45em}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+	\item
+		\begin{tabularx}{\textwidth}[t]{@{}Xr@{}}
+			\small #1 & {\small #2} \\
+		\end{tabularx}\vspace{-0.2em}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0pt, label={}, itemsep=0.55em, topsep=0.25em, parsep=0pt, partopsep=0pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=1.15em, itemsep=0.16em, topsep=0.28em, parsep=0pt, partopsep=0pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-0.2em}}
+\newcommand{\iconlink}[3]{\href{#1}{#2\hspace{0.35em}#3}}
+\newcommand{\resumeMetaLine}[1]{\vspace{-0.15em}{\small\color{muted}[#1]}\par\vspace{0.05em}}
+\newcommand{\resumeTechLine}[1]{\vspace{0.2em}{\small\color{muted}#1}\par\vspace{0.01em}}
+
+\begin{document}
+
+\begin{center}
+	{\Huge \scshape Marco S\`evegrand} \\
+	\vspace{3pt}
+	\small Braga, Portugal $|$ (+351) 928 116 840 $|$ \href{mailto:contact@marcosev.com}{contact@marcosev.com} \\
+	\vspace{1pt}
+	\small \iconlink{https://marcosev.com}{\faGlobe}{marcosev.com} $|$ \iconlink{https://linkedin.com/in/marcosevegrand}{\faLinkedin}{marcosevegrand} $|$ \iconlink{https://github.com/marcosevegrand}{\faGithub}{marcosevegrand}
+\end{center}
+
+\section{About Me}
+\small Software engineering student focused on systems, networking, and software architecture. I enjoy understanding how software behaves under real constraints and building practical tools that solve clear problems. Currently developing experience with cloud platforms, containers, and cybersecurity through coursework and personal projects.
+
+\section{Experience}
+\resumeSubHeadingListStart
+	\resumeSubheading
+		{Store Associate \& Web Developer}{Feb 2026 -- Present}
+		{Biobrassica}{Braga, Portugal}
+		\resumeItemListStart
+			\resumeItem{Help with day-to-day store work and customer support.}
+			\resumeItem{Build and maintain the company website and e-commerce store as the sole developer.}
+		\resumeItemListEnd
+
+	\resumeSubheading
+		{Math \& Physics Tutor}{Sep 2025 -- Present}
+		{Self-employed}{Braga, Portugal}
+		\resumeItemListStart
+			\resumeItem{Give one-to-one mathematics and physics lessons to high-school students.}
+			\resumeItem{Prepare exercises and study plans based on each student's needs and exam goals.}
+		\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\section{Education \& Credentials}
+\resumeSubHeadingListStart
+	\resumeSubheading
+		{B.Sc. Software Engineering}{Sep 2023 -- Jun 2026}
+		{University of Minho}{Braga, Portugal}
+		\resumeItemListStart
+			\resumeItem{Coursework in software architecture, algorithms and data structures, distributed systems, computer networks, and database systems.}
+		\resumeItemListEnd
+
+	\resumeSubheading
+		{Learning Kubernetes}{Feb 5, 2026}
+		{LinkedIn Learning}{ID: 6c8b28d6f4f8050b76bc371cd835ab70d36bb18bbc52af879c9ab202b25ff4d4}
+		{}
+
+	\resumeSubheading
+		{English C1 Advanced}{May 2023}
+		{Cambridge Assessment English}{Certification ID: C1827928}
+		{}
+\resumeSubHeadingListEnd
+
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0pt, label={}, topsep=0.2em, itemsep=0.12em]
+	\small{\item{
+		\textbf{Core Tools}{: Go, Bash, Git, GitHub, Docker, Azure} \\
+		\textbf{Foundations}{: Software engineering, systems thinking, networking, infrastructure, web development, database systems}
+	}}
+\end{itemize}
+
+\section{Currently Learning}
+\resumeItemListStart
+	\resumeItem{Kubernetes and container orchestration concepts.}
+	\resumeItem{Azure cloud services in practice while preparing for the AZ-104 certification.}
+	\resumeItem{Cybersecurity foundations through coursework and independent study.}
+\resumeItemListEnd
+
+\section{Selected Projects}
+\resumeSubHeadingListStart
+	\resumeProjectHeading
+		{\textbf{Document Indexing and Search Service}}{[Grade: 20/20]}
+		\resumeTechLine{C, Linux, POSIX IPC, FIFOs, LRU Cache, Concurrency}
+		\resumeItemListStart
+			\resumeItem{Built a Linux document indexing service around FIFO-based client-server communication with persistent indexing for stateful retrieval.}
+			\resumeItem{Added an LRU cache and parallel keyword search, with process cleanup and concurrency control for safe multi-document execution.}
+		\resumeItemListEnd
+
+	\resumeProjectHeading
+		{\textbf{Distributed Time-Series Storage System}}{[Grade: 18/20]}
+		\resumeTechLine{Java, TCP, Multithreading, Thread Pool, Pub/Sub, Persistence}
+		\resumeItemListStart
+			\resumeItem{Built a concurrent multi-client TCP server with a custom framed protocol, thread-pool execution, and safe shared-state handling.}
+			\resumeItem{Developed a configurable time-series storage engine with in-memory caching, disk persistence, and real-time pub/sub notifications.}
+		\resumeItemListEnd
+
+	\resumeProjectHeading
+		{\textbf{Space Communication Protocols \& Simulator}}{[Grade: 19.5/20]}
+		\resumeTechLine{Go, TCP/UDP, React, Node.js, CORE Emulator, FEC}
+		\resumeItemListStart
+			\resumeItem{Designed custom TCP and UDP protocols with FEC, fragmentation, ordered delivery, and exponential backoff retransmission.}
+			\resumeItem{Simulated a mothership-rover mission architecture and built a real-time dashboard validated in CORE under packet loss and latency.}
+		\resumeItemListEnd
+
+	\resumeProjectHeading
+		{\textbf{Database System for GreenMotion Solutions}}{[Grade: 18/20]}
+		\resumeTechLine{MySQL, SQL, ER Modelling, Relational Schema, Stored Procedures, Requirements Analysis}
+		\resumeItemListStart
+			\resumeItem{Translated business requirements into an ER model and a normalised relational schema for a vehicle reservation platform.}
+			\resumeItem{Implemented the MySQL database with procedural logic, DB-level business rules, and role-based access control.}
+		\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\end{document}

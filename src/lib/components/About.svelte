@@ -5,25 +5,23 @@
 <SectionReveal id="about" class="content-section">
 	<div class="about-copy">
 		<p class="about-block">
-			I bring what AI cannot replace: <strong class="about-emphasis">creativity, intuition,
-			anticipation</strong>, and the <strong class="about-emphasis">judgment</strong>
-			to know what matters before it becomes a problem.
+			I am a <strong class="about-emphasis">third-year Software Engineering student</strong>,
+			and after finishing my bachelor's I intend to pursue a
+			<strong class="about-emphasis">master's in cybersecurity</strong>.
 		</p>
 
 		<p class="about-block">
-			I <strong class="about-emphasis">leverage AI</strong> to move fast, but I stay responsible
-			for the work that matters most:
-			<span class="about-underline">making tradeoffs clear</span>, catching edge cases early,
-			and turning rough ideas into something solid enough to ship. I work well with people,
-			adapt quickly, and <strong class="about-emphasis">communicate directly</strong>.
+			<span class="about-underline">I am proactive, learn fast, and like working in a team</span>.
+			I use AI to move faster and explore ideas, but I
+			<strong class="about-emphasis">stay responsible for the result</strong> and the
+			decisions behind it.
 		</p>
 
 		<p class="about-block">
-			I graduated in <strong class="about-emphasis">Software Engineering</strong>, and I am
-			now looking to go deeper into the parts of the craft that reward rigor and long-term
-			thinking, especially <strong class="about-emphasis">software architecture</strong> and
-			<strong class="about-emphasis">cybersecurity</strong>. I want to design systems that are
-			<span class="about-underline">clear, resilient, and secure by default</span>.
+			I am especially interested in <strong class="about-emphasis">cybersecurity</strong>,
+			<strong class="about-emphasis">infrastructure</strong>, and
+			<strong class="about-emphasis">systems architecture</strong>, and I want to keep building
+			knowledge in those areas.
 		</p>
 	</div>
 </SectionReveal>

@@ -2,17 +2,13 @@
 	import { createElement, type ComponentType } from 'react';
 	import { createRoot, type Root } from 'react-dom/client';
 	import {
-		AWS,
 		Azure,
 		Bash,
-		C,
-		Cloudflare,
 		Docker,
 		Git,
 		GitHubDark,
 		GitHubLight,
-		Go,
-		Kubernetes
+		Go
 	} from 'developer-icons';
 	import { theme, type ThemeMode } from '$lib/theme.svelte';
 	import SectionReveal from './SectionReveal.svelte';
@@ -27,8 +23,6 @@
 		git: Git,
 		bash: Bash,
 		docker: Docker,
-		kubernetes: Kubernetes,
-		aws: AWS,
 		azure: Azure
 	};
 
@@ -67,6 +61,10 @@
 	}
 
 	function resolveIconsPerLine(total: number) {
+		if (total <= 6) {
+			return Math.max(total, 1);
+		}
+
 		for (const candidate of [5, 4, 3, 2, 1]) {
 			if (candidate <= total && total % candidate === 0) {
 				return candidate;
