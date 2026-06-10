@@ -1,22 +1,12 @@
 <div align="center">
-  <table border="0" cellpadding="20" cellspacing="0" style="border: none;">
-    <tr>
-      <td align="center" valign="middle" style="border: none;">
-        <img src="me.png" width="160" style="border-radius: 50%; object-fit: cover;" alt="Marco Sèvegrand" />
-      </td>
-      <td align="left" valign="middle" style="border: none;">
-        <h1 style="margin-bottom: 0;">Marco Sèvegrand</h1>
-        <b>Software Engineer</b> · Braga, Portugal
-        <br><br>
-        📧 <a href="mailto:contact@marcosev.com">contact@marcosev.com</a> · 
-        🔗 <a href="https://linkedin.com/in/marcosevegrand">linkedin.com/in/marcosevegrand</a> · 
-        🌐 <a href="https://marcosev.com">marcosev.com</a>
-      </td>
-    </tr>
-  </table>
+    
+  # MARCO SÈVEGRAND 
+  **Software Engineer** · Braga, Portugal  
+  📧 [contact@marcosev.com](mailto:contact@marcosev.com) · 🔗 [in/marcosevegrand](https://linkedin.com/in/marcosevegrand) · 🌐 [marcosev.com](https://marcosev.com)
+  
 </div>
 
-<br/>
+---
 
 ## Featured University Projects
 
