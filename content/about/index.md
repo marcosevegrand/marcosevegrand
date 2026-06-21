@@ -9,4 +9,6 @@ My focus is where <span class="text-mark">infrastructure</span>, <span class="te
 
 I use AI to speed up exploration and prototyping, but I don't blind-copy paste. I take full ownership of whatever I ship.
 
-Outside of tech: gym, chess and philosophy.
+Confortable writing Go and Python scripts when needed, tho I’m happiest when architecting systems, securing networks, or building robust infrastructure.
+
+Outside of tech: gym, chess and philosophy are likely my biggest passions.
