@@ -1,0 +1,5 @@
+{{- $label := lower . -}}
+{{- if in $label "@" -}}
+{{- else -}}
+{{ partial "social-icon.html" . }}
+{{- end -}}

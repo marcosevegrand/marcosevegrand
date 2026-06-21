@@ -1,0 +1,15 @@
+{{ define "main" }}
+  <section class="page-head">
+    <p class="eyebrow">{{ .Kind }}</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+  </section>
+
+  <div class="post-list">
+    {{ range .Pages }}
+      {{ partial "post-item.html" . }}
+    {{ else }}
+      <p class="muted">Nothing here yet.</p>
+    {{ end }}
+  </div>
+{{ end }}

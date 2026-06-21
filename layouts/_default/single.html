@@ -1,0 +1,23 @@
+{{ define "main" }}
+  <article class="article">
+    <header class="article-header">
+      <p class="post-meta">
+        {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.dateFormat | default "02-01-2006") }}</time>{{ end }}
+        {{ with .Params.tags }}<span aria-hidden="true">·</span> {{ range . }}<a href="{{ printf "/tags/%s/" (. | urlize) }}">#{{ . }}</a> {{ end }}{{ end }}
+      </p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.summary }}<p class="lead">{{ . }}</p>{{ end }}
+    </header>
+
+    {{ if and (.Params.toc | default true) (.TableOfContents) }}
+      <aside class="toc" aria-label="Table of contents">
+        <p>On this page</p>
+        {{ .TableOfContents }}
+      </aside>
+    {{ end }}
+
+    <div class="content">
+      {{ .Content }}
+    </div>
+  </article>
+{{ end }}

@@ -1,0 +1,64 @@
+baseURL: "https://marcosev.com/"
+locale: "en"
+title: "Marco Sèvegrand"
+enableRobotsTXT: true
+enableGitInfo: true
+timeZone: "Europe/Lisbon"
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+permalinks:
+  posts: "/posts/:slug/"
+
+taxonomies:
+  tag: "tags"
+
+markup:
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    codeFences: true
+    guessSyntax: false
+    lineNos: false
+    noClasses: false
+
+params:
+  description: "Personal website of Marco Sèvegrand, a software engineer focused on cybersecurity, infrastructure, networks and systems architecture."
+  author: "Marco Sèvegrand"
+  role: "Software Engineer"
+  location: "Braga, Portugal"
+  dateFormat: "02-01-2006"
+  resume: "/cv/resume.pdf"
+  ogImage: "/og-image.svg"
+  contacts:
+    - label: "contact@marcosev.com"
+      href: "mailto:contact@marcosev.com"
+  socials:
+    - label: "GitHub"
+      href: "https://github.com/marcosevegrand"
+    - label: "LinkedIn"
+      href: "https://linkedin.com/in/marcosevegrand"
+    - label: "Hack The Box"
+      href: "https://app.hackthebox.com/profile/marcosevegrand"
+    - label: "TryHackMe"
+      href: "https://tryhackme.com/p/marcosevegrand"
+
+menus:
+  main:
+    - name: "Posts"
+      pageRef: "/posts"
+      weight: 10
+    - name: "About"
+      pageRef: "/about"
+      weight: 20
+    - name: "Resume"
+      url: "/cv/resume.pdf"

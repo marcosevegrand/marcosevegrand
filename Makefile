@@ -1,16 +1,14 @@
-LATEX ?= lualatex
-CV_DIR := static/cv
-CV_TEX := $(CV_DIR)/main.tex
-CV_PDF := $(CV_DIR)/cv.pdf
-CV_AUX := $(CV_DIR)/cv.aux $(CV_DIR)/cv.log $(CV_DIR)/cv.out $(CV_DIR)/cv.toc $(CV_DIR)/cv.fls $(CV_DIR)/cv.fdb_latexmk $(CV_DIR)/cv.synctex.gz
+.PHONY: serve build new clean
 
-.PHONY: cv clean
+serve:
+	hugo server -D
 
-cv: $(CV_PDF)
+build:
+	hugo --gc --minify --cleanDestinationDir
 
-$(CV_PDF): $(CV_TEX)
-	$(LATEX) -interaction=nonstopmode -halt-on-error -file-line-error -jobname=cv -output-directory=$(CV_DIR) $(CV_TEX)
-	$(LATEX) -interaction=nonstopmode -halt-on-error -file-line-error -jobname=cv -output-directory=$(CV_DIR) $(CV_TEX)
+new:
+	@test -n "$(title)" || { echo "usage: make new title='My Post Title'"; exit 1; }
+	hugo new "posts/$(title).md"
 
 clean:
-	rm -f $(CV_AUX)
+	rm -rf public/ resources/

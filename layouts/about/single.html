@@ -1,0 +1,69 @@
+{{ define "main" }}
+  <article class="about-layout">
+    <div class="about-grid">
+      <aside class="about-sidebar" aria-label="Photo and contact links">
+        <img class="about-photo" src="/images/me.png" alt="Portrait of Marco Sèvegrand" loading="eager">
+
+        <div class="contact-list">
+          {{ range site.Params.socials }}
+            <a class="contact-link" href="{{ .href }}" rel="me noopener" target="_blank">
+              {{ partial "contact-icon.html" .label }}
+              <span>{{ .label }}</span>
+            </a>
+          {{ end }}
+          {{ range site.Params.contacts }}
+            <a class="contact-link" href="{{ .href }}">
+              {{ partial "contact-icon.html" .label }}
+              <span>{{ .label }}</span>
+            </a>
+          {{ end }}
+        </div>
+      </aside>
+
+      <div class="about-main">
+        <div class="content about-copy">
+          {{ .Content }}
+        </div>
+
+        <section class="section-block certifications-section">
+          <div class="section-heading">
+            <p class="section-label">Certifications</p>
+          </div>
+          <ul class="certification-list">
+            {{ range hugo.Data.certifications }}
+              <li>{{ .title }} ({{ .issuer }}, {{ .date }})</li>
+            {{ end }}
+          </ul>
+        </section>
+
+        <section class="section-block timeline-section">
+          <div class="section-heading">
+            <p class="section-label">Experience & Education</p>
+          </div>
+          <div class="timeline-list">
+            {{ range hugo.Data.timeline }}
+              <details class="timeline-item">
+                <summary>
+                  <span class="timeline-line">
+                    <span class="timeline-date">{{ .date }}</span>
+                    <span class="timeline-title">{{ .title }}</span>
+                    <span class="timeline-at">at</span>
+                    <span class="timeline-org-inline">{{ .org }}</span>
+                  </span>
+                  <span class="timeline-arrow" aria-hidden="true">⌄</span>
+                </summary>
+                <div class="timeline-details">
+                  <p class="timeline-org">
+                    {{ if .href }}<a href="{{ .href }}" rel="noopener" target="_blank">{{ .org }}</a>{{ else }}{{ .org }}{{ end }}
+                    <span>· {{ .kind }}</span>
+                  </p>
+                  {{ range .details }}<p>{{ . }}</p>{{ end }}
+                </div>
+              </details>
+            {{ end }}
+          </div>
+        </section>
+      </div>
+    </div>
+  </article>
+{{ end }}

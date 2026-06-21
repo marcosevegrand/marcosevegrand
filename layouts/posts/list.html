@@ -1,0 +1,20 @@
+{{ define "main" }}
+  <section class="page-head">
+    <p class="eyebrow">Archive</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+  </section>
+
+  <section class="search-panel" aria-labelledby="post-search-title">
+    <label id="post-search-title" for="post-filter">Search posts</label>
+    <input id="post-filter" type="search" placeholder="Search title, summary, or tags" autocomplete="off" data-local-search>
+  </section>
+
+  <div class="post-list" data-search-results>
+    {{ range .Pages }}
+      {{ partial "post-item.html" . }}
+    {{ else }}
+      <p class="muted">No posts yet.</p>
+    {{ end }}
+  </div>
+{{ end }}

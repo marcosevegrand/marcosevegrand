@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f9f9fa"/>
+  <path d="M110 120h980v390H110z" fill="none" stroke="#dee2e6" stroke-width="2"/>
+  <text x="150" y="275" fill="#121416" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="700">Marco Sèvegrand</text>
+  <text x="153" y="345" fill="#495057" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34">Software Engineer</text>
+  <text x="153" y="405" fill="#3d5a80" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">marcosev.com</text>
+</svg>

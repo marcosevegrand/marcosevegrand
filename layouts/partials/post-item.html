@@ -1,0 +1,11 @@
+<article class="post-item">
+  <div class="post-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.dateFormat | default "02-01-2006") }}</time>
+    {{ with .Params.tags }}
+      <span aria-hidden="true">·</span>
+      <span>{{ delimit . ", " }}</span>
+    {{ end }}
+  </div>
+  <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  {{ with .Summary }}<p>{{ . | plainify }}</p>{{ end }}
+</article>

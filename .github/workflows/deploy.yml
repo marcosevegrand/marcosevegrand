@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Hugo site to GitHub Pages
 
 on:
   push:
@@ -21,25 +21,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          submodules: recursive
+          fetch-depth: 0
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: latest
+          extended: true
 
       - name: Build site
-        run: npm run build
-        env:
-          SITE_URL: https://marcosev.com
+        run: hugo --gc --minify --cleanDestinationDir --baseURL "https://marcosev.com/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build
+          path: ./public
 
   deploy:
     environment:

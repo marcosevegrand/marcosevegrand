@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
-    font-family="'Cormorant Garamond', Georgia, serif" font-weight="700" font-size="52" fill="#424242">M</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Marco Sèvegrand">
+  <rect width="64" height="64" fill="#f9f9fa"/>
+  <path d="M14 44V20h7l11 15 11-15h7v24h-7V30L32 45 21 30v14z" fill="#121416"/>
+  <path d="M12 52h40" stroke="#3d5a80" stroke-width="4"/>
 </svg>

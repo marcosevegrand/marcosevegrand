@@ -1,0 +1,27 @@
+- kind: "work"
+  date: "Feb 2026 to Present"
+  title: "Store Associate & Web Developer"
+  org: "Biobrassica"
+  href: "https://www.biobrassica.pt/"
+  details:
+    - "Supporting in-store operations and customer care while independently maintaining the company's web presence."
+- kind: "work"
+  date: "Sept 2025 to Present"
+  title: "Math & Physics Tutor"
+  org: "Self-employed"
+  details:
+    - "One-on-one tutoring focused on clarity, consistency and exam preparation."
+- kind: "education"
+  date: "2026 onward"
+  title: "M.Sc. Cybersecurity"
+  org: "University of Minho"
+  href: "https://www.uminho.pt/EN/"
+  details:
+    - "Starting a master's path focused on security, networks, cryptography and resilient systems."
+- kind: "education"
+  date: "Sept 2023 to Jun 2026"
+  title: "B.Sc. Software Engineering"
+  org: "University of Minho"
+  href: "https://www.uminho.pt/EN/"
+  details:
+    - "Coursework across algorithms, networks, databases, distributed systems and software architecture."

@@ -1,0 +1,38 @@
+{{ define "main" }}
+  <section class="hero-block" aria-labelledby="intro-title">
+    <div class="hero-copy">
+      <h1 id="intro-title">Hi.</h1>
+      <div class="intro-copy">
+        <p>This is my personal blog.</p>
+        <p>Cybersecurity and things worth sharing.</p>
+        <p>Consider checking out my <a href="/about/">about me</a> page.</p>
+      </div>
+      <div class="link-row" aria-label="Primary links">
+        {{ range site.Params.socials }}
+          <a class="social-icon-link" href="{{ .href }}" rel="me noopener" target="_blank" aria-label="{{ .label }}">
+            {{ partial "social-icon.html" .label }}
+            <span>{{ .label }}</span>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="recent-posts-title">
+    <div class="section-heading">
+      <h2 id="recent-posts-title">Recent posts</h2>
+      <a class="section-link" href="/posts/">All posts</a>
+    </div>
+    {{ $posts := where site.RegularPages "Section" "posts" }}
+    {{ if $posts }}
+      <div class="post-list compact-list">
+        {{ range first 5 $posts }}
+          {{ partial "post-item.html" . }}
+        {{ end }}
+      </div>
+    {{ else }}
+      <p class="muted">No posts yet.</p>
+    {{ end }}
+  </section>
+
+{{ end }}
