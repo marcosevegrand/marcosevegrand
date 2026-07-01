@@ -47,10 +47,12 @@ params:
       href: "https://github.com/marcosevegrand"
     - label: "LinkedIn"
       href: "https://linkedin.com/in/marcosevegrand"
-    - label: "Hack The Box"
-      href: "https://app.hackthebox.com/profile/marcosevegrand"
+    - label: "HackTheBox"
+      href: "https://profile.hackthebox.com/profile/019ed207-d16a-73ea-b364-93cb385a2cf5"
     - label: "TryHackMe"
       href: "https://tryhackme.com/p/marcosevegrand"
+    - label: "Credly"
+      href: "https://www.credly.com/users/marcosevegrand"
 
 menus:
   main:

@@ -458,11 +458,22 @@ h3 { font-size: 1.16rem; }
 }
 
 .certification-list li {
-  margin: 0.35rem 0 0;
+  margin: 0.5rem 0 0;
 }
 
 .certification-list li:first-child {
   margin-top: 0;
+}
+
+.cert-detail {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.badges-line {
+  margin: 0.5rem 0 0 1.2rem;
+  color: var(--muted);
 }
 
 .timeline-section { margin-top: 3.2rem; }

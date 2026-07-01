@@ -25,17 +25,6 @@
           {{ .Content }}
         </div>
 
-        <section class="section-block certifications-section">
-          <div class="section-heading">
-            <p class="section-label">Certifications</p>
-          </div>
-          <ul class="certification-list">
-            {{ range hugo.Data.certifications }}
-              <li>{{ .title }} ({{ .issuer }}, {{ .date }})</li>
-            {{ end }}
-          </ul>
-        </section>
-
         <section class="section-block timeline-section">
           <div class="section-heading">
             <p class="section-label">Experience & Education</p>
@@ -53,16 +42,41 @@
                   <span class="timeline-arrow" aria-hidden="true">⌄</span>
                 </summary>
                 <div class="timeline-details">
-                  <p class="timeline-org">
-                    {{ if .href }}<a href="{{ .href }}" rel="noopener" target="_blank">{{ .org }}</a>{{ else }}{{ .org }}{{ end }}
-                    <span>· {{ .kind }}</span>
-                  </p>
                   {{ range .details }}<p>{{ . }}</p>{{ end }}
                 </div>
               </details>
             {{ end }}
           </div>
         </section>
+
+        {{ $certs := where hugo.Data.certifications "kind" "certification" }}
+        {{ $badges := where hugo.Data.certifications "kind" "badge" }}
+
+        {{ if $certs }}
+        <section class="section-block certifications-section">
+          <div class="section-heading">
+            <p class="section-label">Certifications</p>
+          </div>
+          <ul class="certification-list">
+            {{ range $certs }}
+              <li>
+                <strong>{{ .title }}</strong>
+                <span class="cert-detail">{{ .issuer }}, {{ .date }}</span>
+              </li>
+            {{ end }}
+          </ul>
+
+          {{ if $badges }}
+            <p class="badges-line">
+              AWS Badges in:
+              {{ range $i, $b := $badges }}
+                {{- if $i }}, {{ end -}}
+                {{- replace $b.title "AWS Knowledge: " "" -}}
+              {{ end }}
+            </p>
+          {{ end }}
+        </section>
+        {{ end }}
       </div>
     </div>
   </article>

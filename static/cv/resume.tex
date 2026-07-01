@@ -1,0 +1,286 @@
+% Marco Sèvegrand — CV
+% Compile with: lualatex resume.tex
+\documentclass[11pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{Source Sans Pro}
+\setsansfont{Source Sans Pro}
+
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=0.65in, top=0.6in, bottom=0.55in}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage[skip=0.15em]{parskip}
+\usepackage{fontawesome5}
+
+% ── Colours ───────────────────────────────────────────────────────────
+\definecolor{heading}{HTML}{121416}
+\definecolor{text}{HTML}{212529}
+\definecolor{muted}{HTML}{495057}
+\definecolor{accent}{HTML}{3D5A80}
+
+% ── Hyperlinks ────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accent,
+  linkcolor=accent,
+  pdfauthor={Marco Sèvegrand},
+  pdftitle={Marco Sèvegrand — CV}
+}
+
+% ── Section formatting ────────────────────────────────────────────────
+\titleformat{\section}
+  {\Large\bfseries\color{heading}}
+  {}{0em}
+  {}
+  [\vspace{-0.7em}\rule{\textwidth}{0.5pt}]
+\titlespacing{\section}{0pt}{0.7em}{0.2em}
+
+% ── Custom commands ───────────────────────────────────────────────────
+\newcommand{\cvheader}[1]{%
+  \begin{center}
+    {\Huge\bfseries\color{heading} Marco Sèvegrand}\\[0.15em]
+    {\large\color{muted} Software Engineer $|$ Cybersecurity \& Secure Systems}\\[0.25em]
+    {\small\color{muted}
+      Braga, Portugal $|$
+      \href{tel:+351928116840}{(+351) 928 116 840} $|$
+      \href{mailto:contact@marcosev.com}{contact@marcosev.com}
+    }\\[0.05em]
+    {\small\color{muted}
+      \faGlobe\ \href{https://marcosev.com}{Website}
+      \hspace{0.5em}
+      \faLinkedin\ \href{https://linkedin.com/in/marcosevegrand}{LinkedIn}
+      \hspace{0.5em}
+      \faGithub\ \href{https://github.com/marcosevegrand}{GitHub}
+      \hspace{0.5em}
+      \faUserSecret\ \href{https://profile.hackthebox.com/profile/019ed207-d16a-73ea-b364-93cb385a2cf5}{HackTheBox}
+      \hspace{0.5em}
+      \faAward\ \href{https://www.credly.com/users/marcosevegrand}{Credly}
+    }
+  \end{center}
+  \vspace{-0.3em}
+}
+
+\newenvironment{cvitem}[2]{%
+  \vspace{0.25em}
+  \noindent
+  \textbf{\color{heading}#1}%
+  \hfill
+  {\small\color{muted}#2}%
+  \par
+}{}
+
+\newcommand{\cvsub}[2]{%
+  \noindent
+  {\itshape\color{text}#1}%
+  \hfill
+  {\small\color{muted}#2}%
+  \par
+}
+
+\newcommand{\cvdetail}[1]{%
+  \noindent{\small\color{text} -- #1}\par
+}
+
+\newenvironment{cvbullets}{%
+  \begin{itemize}[leftmargin=1.2em, itemsep=0em, topsep=0em, parsep=0em]
+}{%
+  \end{itemize}
+}
+
+% Cert entry: name on top, issuer + date below in smaller text
+\newcommand{\cvcert}[3]{%
+  \vspace{0.2em}
+  \noindent
+  \textbf{\color{heading}#1}
+  \par
+  \noindent
+  {\small\color{muted}#2 · #3}
+  \par
+}
+
+% ── Document ──────────────────────────────────────────────────────────
+\begin{document}
+
+\cvheader{}
+
+% ── About ─────────────────────────────────────────────────────────────
+\section{About Me}
+Software Engineering graduate now pursuing a Master's in Cybersecurity.
+Focused on application security, applied cryptography, secure software
+development lifecycles, and threat modeling. Solid foundation in
+infrastructure, networking, and systems architecture. AWS Certified AI
+Practitioner and Cloud Practitioner. Comfortable with Go, C, and Python.
+
+% ── Experience ────────────────────────────────────────────────────────
+\section{Experience}
+
+\begin{cvitem}{Full-Stack Web Developer}{Feb 2026 -- Present}
+\cvsub{Biobrassica}{Braga, Portugal}
+\begin{cvbullets}
+  \item Sole developer for the company's online presence: built a full
+    branding page and e-commerce store with product CRUD, inventory
+    management, and secure payment integration via IfThenPay.
+  \item Initially developed with Django/Python on a Linux VPS; currently
+    migrating the stack to Laravel/PHP on cPanel to simplify maintenance
+    and handover.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{Store Associate}{Feb 2026 -- Present}
+\cvsub{Biobrassica}{Braga, Portugal}
+\begin{cvbullets}
+  \item Oversaw stock management and replenishment, ensuring consistent
+    product availability.
+  \item Delivered front-line customer service, handling inquiries and
+    in-store sales.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{Math \& Physics Tutor}{Sep 2025 -- Present}
+\cvsub{Self-employed}{Remote}
+\begin{cvbullets}
+  \item Mentored high-school students in mathematics and physics through
+    one-to-one lessons.
+  \item Designed study plans aligned to each student's exam goals and
+    skill level.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{Author --- ``Mistério no Aeroclube''}{2019}
+\begin{cvbullets}
+  \item ↗ \href{https://marcosevegrand.linkyhost.com/}{Published fiction book (80 pages, teen demographic).}
+\end{cvbullets}
+\end{cvitem}
+
+% ── Certifications ────────────────────────────────────────────────────
+\section{Certifications}
+
+\cvcert{AWS Certified AI Practitioner (AIF-C01)}{Amazon Web Services (AWS)}{July 2026}
+\cvcert{AWS Certified Cloud Practitioner (CLF-C02)}{Amazon Web Services (AWS)}{July 2026}
+\cvcert{English C1 Advanced}{Cambridge Assessment English}{May 2023}
+
+\vspace{0.2em}
+\noindent
+{\color{muted}AWS Badges in: Cloud Essentials, AI-DLC}
+
+% ── Education ─────────────────────────────────────────────────────────
+\section{Education}
+
+\begin{cvitem}{B.Sc. Software Engineering}{Sep 2023 -- Jun 2026}
+\cvsub{University of Minho}{Braga, Portugal}
+\cvdetail{Final grade: 16.15/20. Coursework includes distributed systems,
+  cybersecurity, operating systems, compilers, algorithms, databases, AI,
+  and software systems design.}
+\end{cvitem}
+
+\begin{cvitem}{Secondary Education}{Sep 2020 -- Jun 2023}
+\cvsub{Escola Secundária Fernão de Magalhães}{Braga, Portugal}
+\cvdetail{Final grade: 19.6/20. Participated in Mathematics Olympiads,
+  Chemistry Olympiads, and Youth Parliament.}
+\end{cvitem}
+
+% ── Skills ────────────────────────────────────────────────────────────
+\section{Skills}
+
+\noindent
+\begin{tabular}{@{}p{0.22\textwidth} p{0.75\textwidth}@{}}
+  \textbf{Programming} & Go, Python, Bash. \\
+  \textbf{Systems} & Linux, Docker, VPS. \\
+  \textbf{Security} & Applied Cryptography, Threat Modeling, Secure SDLC,
+    Certificate-based Auth. \\
+  \textbf{Architecture} & Concurrent Programming, Network
+    Protocols, Distributed Systems. \\
+  \textbf{Learning} & AWS, SOC Analysis/Ops, Kubernetes. \\
+  \textbf{Soft Skills} & Proactive, clear communication, active listening,
+    critical thinking, learning agility. \\
+  \textbf{Spoken} & Portuguese (Native), English (C1). \\
+\end{tabular}
+
+% ── Selected Projects ─────────────────────────────────────────────────
+\section{Selected Projects}
+
+\begin{cvitem}{Secure Multi-Device Messaging Platform}{Grade: 18/20, B+}
+\cvsub{Python, TCP/TLS, E2EE, X3DH, Ed25519, X25519, AES-GCM, Argon2id,
+  SQLite, Textual}{\href{https://github.com/marcosevegrand}{↗ GitHub}}
+\begin{cvbullets}
+  \item Built an end-to-end encrypted messaging system with multi-device
+    identity, offline delivery, group messaging, local history, and a
+    terminal TUI.
+  \item Implemented X3DH session bootstrap, symmetric ratcheting, device
+    challenge-response authentication, certificate-based identity binding,
+    and at-rest encryption for client/server secrets.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{Automated Software Testing \& Quality Analysis Pipeline}{Grade: 18.5/20, A-}
+\cvsub{Java, Maven, JUnit 5, jqwik, JaCoCo, PIT, EvoSuite,
+  Make}{\href{https://github.com/marcosevegrand}{↗ GitHub}}
+\begin{cvbullets}
+  \item Strengthened two Java applications with unit tests, property-based
+    tests, coverage analysis, mutation testing, and automated test
+    generation.
+  \item Automated the full quality pipeline with Maven/Make, expanding the
+    suite to 444 tests and achieving PIT mutation scores of 76\% and 85\%
+    across the two projects.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{Document Indexing and Search Service}{Grade: 20/20, A+}
+\cvsub{C, Linux, POSIX IPC, FIFOs, LRU Cache,
+  Concurrency}{\href{https://github.com/marcosevegrand}{↗ GitHub}}
+\begin{cvbullets}
+  \item Built a Linux document indexing service around FIFO-based
+    client-server communication with persistent indexing for stateful
+    retrieval.
+  \item Added an LRU cache and parallel keyword search, with process
+    cleanup and concurrency control for safe multi-document execution.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{Space Communication Protocols \& Simulator}{Grade: 19.5/20, A+}
+\cvsub{Go, TCP/UDP, React, Node.js, CORE Emulator,
+  FEC}{\href{https://github.com/marcosevegrand}{↗ GitHub}}
+\begin{cvbullets}
+  \item Designed custom TCP and UDP protocols with FEC, fragmentation,
+    ordered delivery, and exponential backoff retransmission.
+  \item Simulated a mothership-rover mission architecture and built a
+    real-time dashboard validated in CORE under packet loss and latency.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{LLM-Assisted Software Development Lifecycle}{Grade: 19/20, A}
+\cvsub{TypeScript, React, Fastify, PostgreSQL, Prisma, Zod, Turborepo,
+  LLM-Augmented Engineering}{\href{https://github.com/marcosevegrand}{↗ GitHub}}
+\begin{cvbullets}
+  \item Conducted a complete software development lifecycle from
+    requirements through architecture, implementation, testing, and
+    documentation, using structured LLM assistance from Claude, GitHub
+    Copilot, and Stitch AI; catalogued and critically reviewed all 48
+    prompts.
+  \item Applied a three-pillar methodology of upfront planning, strict
+    modular decomposition, and mandatory human review on every LLM output,
+    explicitly distinguishing the approach from unstructured ``vibe
+    coding.''
+  \item Selected among the top 4 projects in the curricular unit and
+    featured at the ES3A workshop, held as part of Universidade do Minho's
+    Departamento de Informática 50th-anniversary celebrations.
+\end{cvbullets}
+\end{cvitem}
+
+\begin{cvitem}{Distributed Time-Series Storage System}{Grade: 18/20, B+}
+\cvsub{Java, TCP, Multithreading, Thread Pool, Pub/Sub,
+  Persistence}{\href{https://github.com/marcosevegrand}{↗ GitHub}}
+\begin{cvbullets}
+  \item Built a concurrent multi-client TCP server with a custom framed
+    protocol, thread-pool execution, and safe shared-state handling.
+  \item Developed a configurable time-series storage engine with in-memory
+    caching, disk persistence, and real-time pub/sub notifications.
+\end{cvbullets}
+\end{cvitem}
+
+\end{document}
