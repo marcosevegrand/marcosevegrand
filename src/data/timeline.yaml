@@ -1,17 +1,50 @@
 - id: "biobrassica"
-  order: 1
   kind: "work"
+  order: 1
   start: "2026-02"
   status: "ongoing"
-  date: "Feb 2026 to Present"
-  title: "Store Associate & Web Developer"
   org: "Biobrassica"
-  href: "https://www.biobrassica.pt/"
-  details:
-    - "Supporting in-store operations and customer care while independently maintaining the company's web presence."
-- id: "tutoring"
+  meta: "Part-time · 9 mos"
+  location: "Braga, Portugal"
+  roles:
+    - title: "Technical Liaison"
+      date: "Aug 2026 to Present"
+      status: "ongoing"
+      duration: "3 mos"
+      employment: "Hybrid"
+    - title: "Store Associate"
+      date: "Feb 2026 to Present"
+      status: "ongoing"
+      duration: "9 mos"
+      employment: "On-site"
+    - title: "Web Developer"
+      date: "Feb 2026 to Aug 2026"
+      status: "completed"
+      duration: "7 mos"
+      employment: "On-site"
+- id: "msc-cybersecurity"
+  kind: "education"
   order: 2
+  start: "2026-09"
+  status: "ongoing"
+  date: "Sept 2026 to Jun 2028"
+  title: "M.Sc. Cybersecurity"
+  org: "University of Minho"
+  details:
+    - "Starting a master's path focused on security, networks, cryptography and resilient systems."
+- id: "student-cohort-representative"
+  kind: "education"
+  order: 3
+  start: "2026-09"
+  status: "ongoing"
+  date: "Sept 2026 to Present"
+  title: "Student Cohort Representative"
+  org: "University of Minho"
+  details:
+    - "Acted as primary liaison between the postgraduate students and course leadership to streamline student feedback on lab infrastructure, course logistics, and academic delivery."
+- id: "tutoring"
   kind: "work"
+  order: 4
   start: "2025-09"
   status: "ongoing"
   date: "Sept 2025 to Present"
@@ -19,25 +52,13 @@
   org: "Self-employed"
   details:
     - "One-on-one tutoring focused on clarity, consistency and exam preparation."
-- id: "msc-cybersecurity"
-  order: 3
-  kind: "education"
-  start: "2026-09"
-  status: "ongoing"
-  date: "2026 onward"
-  title: "M.Sc. Cybersecurity"
-  org: "University of Minho"
-  href: "https://www.uminho.pt/EN/"
-  details:
-    - "Starting a master's path focused on security, networks, cryptography and resilient systems."
 - id: "bsc-software-engineering"
-  order: 4
   kind: "education"
+  order: 5
   start: "2023-09"
   status: "completed"
   date: "Sept 2023 to Jun 2026"
   title: "B.Sc. Software Engineering"
   org: "University of Minho"
-  href: "https://www.uminho.pt/EN/"
   details:
     - "Final grade: 16.15/20. Coursework includes distributed systems, cybersecurity, operating systems, compilers, algorithms, databases, AI, and software systems design."

@@ -16,18 +16,39 @@ const posts = defineCollection({
   }),
 });
 
+/**
+ * A single role within a grouped employer entry (e.g. the several roles held at
+ * one company). `collapsed: true` hides the role from the list by default and
+ * reveals it behind a "show more" toggle, keeping long histories compact.
+ */
+const role = z.object({
+  title: z.string(),
+  date: z.string(),
+  status: z.enum(['ongoing', 'completed']).default('completed'),
+  duration: z.string().optional(),
+  employment: z.string().optional(),
+  details: z.array(z.string()).default([]),
+  collapsed: z.boolean().default(false),
+});
+
 const timeline = defineCollection({
   loader: file('./src/data/timeline.yaml'),
   schema: z.object({
     kind: z.enum(['work', 'education']),
     order: z.number().default(0),
+    /** Sort key (YYYY-MM); entries are shown newest first. */
     start: z.string().optional(),
     status: z.enum(['ongoing', 'completed']).default('completed'),
-    date: z.string(),
-    title: z.string(),
+    // Single-role entries use `title`/`date`; grouped entries leave them out
+    // and provide `roles` instead.
+    title: z.string().optional(),
+    date: z.string().optional(),
     org: z.string(),
+    meta: z.string().optional(),
+    location: z.string().optional(),
     href: z.url().optional(),
     details: z.array(z.string()).default([]),
+    roles: z.array(role).default([]),
   }),
 });
 

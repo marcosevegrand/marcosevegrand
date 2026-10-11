@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import ContactIcon from '../components/ContactIcon.astro';
 import CertificationLibrary from '../components/CertificationLibrary.astro';
 import { getCollection } from 'astro:content';
-import { SOCIALS, CONTACTS } from '../config';
+import { SOCIALS, SITE } from '../config';
 
 const timeline = (await getCollection('timeline')).sort(
   (a, b) => (b.data.start ?? '').localeCompare(a.data.start ?? '') || a.data.order - b.data.order,
@@ -21,20 +21,14 @@ const timeline = (await getCollection('timeline')).sort(
           loading="eager"
         />
 
+        <p class="about-location">{SITE.location}</p>
+
         <div class="contact-list">
           {
             SOCIALS.map((social) => (
               <a class="contact-link" href={social.href} rel="me noopener" target="_blank">
                 <ContactIcon label={social.label} />
                 <span>{social.label}</span>
-              </a>
-            ))
-          }
-          {
-            CONTACTS.map((contact) => (
-              <a class="contact-link" href={contact.href}>
-                <ContactIcon label={contact.label} />
-                <span>{contact.label}</span>
               </a>
             ))
           }
@@ -71,40 +65,88 @@ const timeline = (await getCollection('timeline')).sort(
 
           <ol class="timeline">
             {
-              timeline.map((item) => (
-                <li class:list={['timeline-entry', `is-${item.data.status}`, `is-${item.data.kind}`]}>
-                  <span class="timeline-node" aria-hidden="true" />
-                  <div class="timeline-panel">
-                    <details class="timeline-item">
-                      <summary>
-                        <span class="timeline-when">
-                          <time>{item.data.date}</time>
-                          <span class="timeline-state">
-                            {item.data.status === 'ongoing' ? 'Ongoing' : 'Completed'}
-                          </span>
-                        </span>
-                        <span class="timeline-heading">
-                          <span class="timeline-title">{item.data.title}</span>
-                          <span class="timeline-org">{item.data.org}</span>
-                        </span>
-                        <span class="timeline-arrow" aria-hidden="true">
-                          ⌄
-                        </span>
-                      </summary>
-                      <div class="timeline-details">
-                        {item.data.details.map((detail) => (
-                          <p>{detail}</p>
-                        ))}
-                        {item.data.href && (
-                          <a class="timeline-link" href={item.data.href} target="_blank" rel="noopener">
-                            {item.data.org} ↗
-                          </a>
-                        )}
-                      </div>
-                    </details>
-                  </div>
-                </li>
-              ))
+              timeline.map((entry) => {
+                const isGroup = entry.data.roles.length > 0;
+                const collapsed = entry.data.roles.filter((role) => role.collapsed).length;
+                return (
+                  <li class:list={['timeline-entry', `is-${entry.data.status}`, `is-${entry.data.kind}`]}>
+                    <span class="timeline-node" aria-hidden="true" />
+                    <div class="timeline-panel">
+                      {isGroup ? (
+                        <div class="timeline-group">
+                          <div class="timeline-group-head">
+                            <span class="timeline-heading">
+                              <span class="timeline-title">{entry.data.org}</span>
+                              <span class="timeline-state">
+                                {entry.data.status === 'ongoing' ? 'Ongoing' : 'Completed'}
+                              </span>
+                            </span>
+                            {(entry.data.meta || entry.data.location) && (
+                              <span class="timeline-when">
+                                {entry.data.meta}
+                                {entry.data.meta && entry.data.location ? ' · ' : ''}
+                                {entry.data.location}
+                              </span>
+                            )}
+                          </div>
+
+                          <ul class="role-list" data-role-list>
+                            {entry.data.roles.map((role) => (
+                              <li class:list={['role', role.collapsed && 'is-collapsed']}>
+                                <p class="role-title">{role.title}</p>
+                                <p class="role-meta">
+                                  <time>{role.date}</time>
+                                  {role.duration && <span>{role.duration}</span>}
+                                  {role.employment && <span>{role.employment}</span>}
+                                  <span class:list={['role-state', `is-${role.status}`]}>
+                                    {role.status === 'ongoing' ? 'Ongoing' : 'Completed'}
+                                  </span>
+                                </p>
+                                {role.details.map((detail) => (
+                                  <p class="role-detail">{detail}</p>
+                                ))}
+                              </li>
+                            ))}
+                          </ul>
+
+                          {collapsed > 0 && (
+                            <button
+                              type="button"
+                              class="role-toggle"
+                              data-role-toggle
+                              data-count={collapsed}>
+                              Show {collapsed} more role{collapsed > 1 ? 's' : ''}
+                            </button>
+                          )}
+                        </div>
+                      ) : (
+                        <details class="timeline-item">
+                          <summary>
+                            <span class="timeline-when">
+                              <time>{entry.data.date}</time>
+                              <span class="timeline-state">
+                                {entry.data.status === 'ongoing' ? 'Ongoing' : 'Completed'}
+                              </span>
+                            </span>
+                            <span class="timeline-heading">
+                              <span class="timeline-title">{entry.data.title}</span>
+                              <span class="timeline-org">{entry.data.org}</span>
+                            </span>
+                            <span class="timeline-arrow" aria-hidden="true">
+                              ⌄
+                            </span>
+                          </summary>
+                          <div class="timeline-details">
+                            {entry.data.details.map((detail) => (
+                              <p>{detail}</p>
+                            ))}
+                          </div>
+                        </details>
+                      )}
+                    </div>
+                  </li>
+                );
+              })
             }
           </ol>
         </section>
@@ -114,3 +156,22 @@ const timeline = (await getCollection('timeline')).sort(
     </div>
   </article>
 </Base>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-role-toggle]')) {
+    const list = button
+      .closest('.timeline-group')
+      ?.querySelector<HTMLElement>('[data-role-list]');
+    if (!list) continue;
+
+    const count = Number(button.dataset.count ?? '0');
+    const expanded = () => list.classList.contains('show-collapsed');
+
+    button.addEventListener('click', () => {
+      list.classList.toggle('show-collapsed');
+      button.textContent = expanded()
+        ? 'Show fewer roles'
+        : `Show ${count} more role${count > 1 ? 's' : ''}`;
+    });
+  }
+</script>

@@ -13,14 +13,21 @@
   issuer: "Amazon Web Services (AWS)"
   date: "July 2026"
   kind: "certification"
+  image: "https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png"
 - id: "english-c1"
   order: 3
   title: "English C1 Advanced"
   issuer: "Cambridge Assessment English"
   date: "May 2023"
   kind: "certification"
-- id: "aws-cloud-essentials"
+- id: "learning-kubernetes"
   order: 4
+  title: "Learning Kubernetes"
+  issuer: "LinkedIn"
+  date: "Feb 2026"
+  kind: "certification"
+- id: "aws-cloud-essentials"
+  order: 5
   title: "AWS Knowledge: Cloud Essentials"
   issuer: "Amazon Web Services (AWS)"
   date: "Jun 2026"
@@ -29,7 +36,7 @@
   image: "https://images.credly.com/images/7cf036b0-c609-4378-a7be-9969e1dea7ab/blob"
   href: "https://www.credly.com/badges/fa192a04-ec62-4406-8888-90e0d975f9aa/public_url"
 - id: "aws-ai-dlc"
-  order: 5
+  order: 6
   title: "AWS Knowledge: AI-DLC"
   issuer: "Amazon Web Services (AWS)"
   date: "Jun 2026"

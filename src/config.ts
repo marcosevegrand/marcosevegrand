@@ -26,8 +26,6 @@ export const SITE = {
   ogImage: '/og-image.svg',
 } as const;
 
-export const CONTACTS: Social[] = [{ label: 'contact@marcosev.com', href: 'mailto:contact@marcosev.com' }];
-
 export const SOCIALS: Social[] = [
   { label: 'GitHub', href: 'https://github.com/marcosevegrand' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/marcosevegrand' },
@@ -36,6 +34,7 @@ export const SOCIALS: Social[] = [
     href: 'https://profile.hackthebox.com/profile/019ed207-d16a-73ea-b364-93cb385a2cf5',
   },
   { label: 'Credly', href: 'https://www.credly.com/users/marcosevegrand' },
+  { label: 'email', href: 'mailto:contact@marcosev.com' },
 ];
 
 export const MENU: MenuItem[] = [
