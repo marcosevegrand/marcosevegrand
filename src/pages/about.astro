@@ -98,20 +98,3 @@ const linkedIn = SOCIALS.find((social) => social.label === 'LinkedIn')?.href;
     </div>
   </article>
 </Base>
-
-<script>
-  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-role-toggle]')) {
-    const list = button.closest('.timeline-details')?.querySelector<HTMLElement>('[data-role-list]');
-    if (!list) continue;
-
-    const count = Number(button.dataset.count ?? '0');
-    const expanded = () => list.classList.contains('show-collapsed');
-
-    button.addEventListener('click', () => {
-      list.classList.toggle('show-collapsed');
-      button.textContent = expanded()
-        ? 'Show fewer roles'
-        : `Show ${count} more role${count > 1 ? 's' : ''}`;
-    });
-  }
-</script>

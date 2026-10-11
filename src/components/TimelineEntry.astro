@@ -11,10 +11,14 @@ const roles = entry.data.roles;
 const isGroup = roles.length > 1;
 const primary = roles[0];
 const rest = roles.slice(1);
-const collapsed = rest.filter((role) => role.collapsed).length;
-const main = isGroup && primary ? primary : entry.data;
 
-const statusLabel = (status?: string) => (status === 'ongoing' ? 'Ongoing' : 'Completed');
+// Complex entries summarise with their most recent role; simple entries use
+// their own title/date.
+const when = (isGroup ? primary?.date : entry.data.date) ?? entry.data.date;
+const title = (isGroup ? primary?.title : entry.data.title) ?? entry.data.title;
+const status = isGroup ? (primary?.status ?? entry.data.status) : entry.data.status;
+
+const statusLabel = (value?: string) => (value === 'ongoing' ? 'Ongoing' : 'Completed');
 
 // Placeholder artwork: initials of the org, skipping connector words.
 const SKIP_WORDS = new Set(['of', 'the', 'and', 'at', 'for']);
@@ -23,6 +27,8 @@ function monogram(name: string): string {
   const initials = words.slice(0, 2).map((word) => word[0]);
   return (initials.join('') || name.slice(0, 1)).toUpperCase();
 }
+
+const hasDetails = Boolean(entry.data.meta || entry.data.location || entry.data.details.length);
 ---
 
 <li class:list={['timeline-entry', `is-${entry.data.status}`, `is-${entry.data.kind}`]}>
@@ -31,59 +37,68 @@ function monogram(name: string): string {
   </span>
 
   <div class="timeline-panel">
-    <details class="timeline-item">
-      <summary>
-        <span class="timeline-when">
-          <time>{main.date}</time>
-          <span class="timeline-state">{statusLabel(main.status)}</span>
-        </span>
-        <span class="timeline-heading">
-          <span class="timeline-title">{main.title}</span>
-          <span class="timeline-org">{entry.data.org}</span>
-        </span>
-        <span class="timeline-arrow" aria-hidden="true">
-          ⌄
-        </span>
-      </summary>
-
-      <div class="timeline-details">
-        {
-          isGroup ? (
-            <>
-              {(entry.data.meta || entry.data.location) && (
-                <p class="timeline-group-meta">
-                  {entry.data.meta}
-                  {entry.data.meta && entry.data.location ? ' · ' : ''}
-                  {entry.data.location}
-                </p>
+    {
+      isGroup ? (
+        <>
+          <details class="timeline-item">
+            <summary class="timeline-row">
+              <span class="timeline-when">
+                <time>{when}</time>
+                <span class="timeline-state">{statusLabel(status)}</span>
+              </span>
+              <span class="timeline-heading">
+                <span class="timeline-title">{title}</span>
+                <span class="timeline-org">{entry.data.org}</span>
+              </span>
+              {hasDetails && (
+                <span class="timeline-arrow" aria-hidden="true">
+                  ⌄
+                </span>
               )}
-              <ul class="role-list" data-role-list>
-                {rest.map((role) => (
-                  <li class:list={['role', role.collapsed && 'is-collapsed']}>
-                    <p class="role-title">{role.title}</p>
-                    <p class="role-meta">
-                      <time>{role.date}</time>
-                      {role.duration && <span>{role.duration}</span>}
-                      {role.employment && <span>{role.employment}</span>}
-                      <span class:list={['role-state', `is-${role.status}`]}>{statusLabel(role.status)}</span>
-                    </p>
-                    {role.details.map((detail) => (
-                      <p class="role-detail">{detail}</p>
-                    ))}
-                  </li>
+            </summary>
+            {hasDetails && (
+              <div class="timeline-details">
+                {(entry.data.meta || entry.data.location) && (
+                  <p class="timeline-group-meta">
+                    {entry.data.meta}
+                    {entry.data.meta && entry.data.location ? ' · ' : ''}
+                    {entry.data.location}
+                  </p>
+                )}
+                {entry.data.details.map((detail) => (
+                  <p>{detail}</p>
                 ))}
-              </ul>
-              {collapsed > 0 && (
-                <button type="button" class="role-toggle" data-role-toggle data-count={collapsed}>
-                  Show {collapsed} more role{collapsed > 1 ? 's' : ''}
-                </button>
-              )}
-            </>
-          ) : (
-            entry.data.details.map((detail) => <p>{detail}</p>)
-          )
-        }
-      </div>
-    </details>
+              </div>
+            )}
+          </details>
+
+          <ul class="subroles">
+            {rest.map((role) => (
+              <li class="subrole">
+                <span class="subrole-title">{role.title}</span>
+                <span class="subrole-meta">
+                  {role.date}
+                  {role.duration ? ` · ${role.duration}` : ''}
+                  {role.employment ? ` · ${role.employment}` : ''}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <div class="timeline-item">
+          <div class="timeline-row">
+            <span class="timeline-when">
+              <time>{when}</time>
+              <span class="timeline-state">{statusLabel(status)}</span>
+            </span>
+            <span class="timeline-heading">
+              <span class="timeline-title">{title}</span>
+              <span class="timeline-org">{entry.data.org}</span>
+            </span>
+          </div>
+        </div>
+      )
+    }
   </div>
 </li>

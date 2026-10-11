@@ -18,8 +18,7 @@ const posts = defineCollection({
 
 /**
  * A single role within a grouped employer entry (e.g. the several roles held at
- * one company). `collapsed: true` hides the role from the list by default and
- * reveals it behind a "show more" toggle, keeping long histories compact.
+ * one company). Secondary roles are listed compactly beneath the entry.
  */
 const role = z.object({
   title: z.string(),
@@ -28,7 +27,6 @@ const role = z.object({
   duration: z.string().optional(),
   employment: z.string().optional(),
   details: z.array(z.string()).default([]),
-  collapsed: z.boolean().default(false),
 });
 
 const timeline = defineCollection({

@@ -23,39 +23,32 @@
       status: "completed"
       duration: "7 mos"
       employment: "On-site"
-- id: "tutoring"
+- id: "student-cohort-representative"
   kind: "work"
   order: 2
-  start: "2025-09"
-  status: "ongoing"
-  featured: false
-  date: "Sept 2025 to Present"
-  title: "Math & Physics Tutor"
-  org: "Self-employed"
-  details:
-    - "One-on-one tutoring focused on clarity, consistency and exam preparation."
-- id: "msc-cybersecurity"
-  kind: "education"
-  order: 3
-  start: "2026-09"
-  status: "ongoing"
-  date: "Sept 2026 to Present"
-  title: "M.Sc. Cybersecurity"
-  org: "University of Minho"
-  logo: "/images/uminho.jpg"
-  details:
-    - "Starting a master's path focused on security, networks, cryptography and resilient systems."
-- id: "student-cohort-representative"
-  kind: "education"
-  order: 4
   start: "2026-09"
   status: "ongoing"
   date: "Sept 2026 to Present"
   title: "Student Cohort Representative"
   org: "University of Minho"
   logo: "/images/uminho.jpg"
-  details:
-    - "Acted as primary liaison between the postgraduate students and course leadership to streamline student feedback on lab infrastructure, course logistics, and academic delivery."
+- id: "tutoring"
+  kind: "work"
+  order: 3
+  start: "2025-09"
+  status: "ongoing"
+  date: "Sept 2025 to Present"
+  title: "Math & Physics Tutor"
+  org: "Self-employed"
+- id: "msc-cybersecurity"
+  kind: "education"
+  order: 4
+  start: "2026-09"
+  status: "ongoing"
+  date: "Sept 2026 to Present"
+  title: "M.Sc. Cybersecurity"
+  org: "University of Minho"
+  logo: "/images/uminho.jpg"
 - id: "bsc-software-engineering"
   kind: "education"
   order: 5
@@ -65,5 +58,3 @@
   title: "B.Sc. Software Engineering"
   org: "University of Minho"
   logo: "/images/uminho.jpg"
-  details:
-    - "Final grade: 16.15/20. Coursework includes distributed systems, cybersecurity, operating systems, compilers, algorithms, databases, AI, and software systems design."
