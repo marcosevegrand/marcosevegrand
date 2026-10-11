@@ -1,0 +1,32 @@
+---
+import { SITE, MENU } from '../config';
+
+const menu = [...MENU].sort((a, b) => a.weight - b.weight);
+const isExternal = (href: string) => href.startsWith('/cv/');
+---
+
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label={`${SITE.title} home`}>
+      <span class="brand-name">{SITE.title}</span>
+      <span class="brand-role">{SITE.role}</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      {
+        menu.map((item) => (
+          <a
+            href={item.href}
+            class={isExternal(item.href) ? 'external-link' : undefined}
+            target={isExternal(item.href) ? '_blank' : undefined}
+            rel={isExternal(item.href) ? 'noopener' : undefined}
+          >
+            <span>{item.name}</span>
+            {isExternal(item.href) && <span aria-hidden="true">↗</span>}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

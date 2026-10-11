@@ -1,0 +1,12 @@
+---
+import SocialIcon from './SocialIcon.astro';
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+const isEmail = label.toLowerCase().includes('@');
+---
+
+{!isEmail && <SocialIcon label={label} />}

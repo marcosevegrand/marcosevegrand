@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostItem from '../../components/PostItem.astro';
+import { byDateDesc, postExcerpt, tagSlug, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const grouped = new Map<string, { name: string; posts: Post[] }>();
+
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const slug = tagSlug(tag);
+      if (!grouped.has(slug)) grouped.set(slug, { name: tag, posts: [] });
+      grouped.get(slug)!.posts.push(post);
+    }
+  }
+
+  return [...grouped.entries()].map(([tag, value]) => ({
+    params: { tag },
+    props: { name: value.name, posts: value.posts.sort(byDateDesc) },
+  }));
+}
+
+const { name, posts } = Astro.props;
+---
+
+<Base title={`#${name}`} description={`Posts tagged ${name}.`}>
+  <section class="page-head">
+    <p class="eyebrow">Tag</p>
+    <h1>#{name}</h1>
+  </section>
+
+  <div class="post-list">
+    {
+      posts.map((post) => (
+        <PostItem
+          title={post.data.title}
+          href={`/posts/${post.id}/`}
+          date={post.data.date}
+          tags={post.data.tags}
+          summary={postExcerpt(post)}
+        />
+      ))
+    }
+  </div>
+</Base>

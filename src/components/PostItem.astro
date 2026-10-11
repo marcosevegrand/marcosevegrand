@@ -1,0 +1,29 @@
+---
+import { formatDate } from '../config';
+
+interface Props {
+  title: string;
+  href: string;
+  date?: Date;
+  tags?: string[];
+  summary?: string;
+}
+
+const { title, href, date, tags = [], summary } = Astro.props;
+---
+
+<article class="post-item">
+  <div class="post-meta">
+    {date && <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>}
+    {
+      tags.length > 0 && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{tags.join(', ')}</span>
+        </>
+      )
+    }
+  </div>
+  <h3><a href={href}>{title}</a></h3>
+  {summary && <p>{summary}</p>}
+</article>

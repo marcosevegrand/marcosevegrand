@@ -1,0 +1,99 @@
+---
+import '../styles/main.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+
+interface Props {
+  /** Page title, rendered as "Title | Site". Omit on the home page. */
+  title?: string;
+  description?: string;
+  /** Loads KaTeX from the CDN for pages that opt in via `math: true`. */
+  math?: boolean;
+  isHome?: boolean;
+  isArticle?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  math = false,
+  isHome = false,
+  isArticle = false,
+} = Astro.props;
+
+const pageTitle = isHome || !title ? SITE.title : `${title} | ${SITE.title}`;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE.author} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/index.xml" />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={isArticle ? 'article' : 'website'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(SITE.ogImage, SITE.url).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {
+      math && (
+        <>
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+          />
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+          <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}]});"
+          ></script>
+        </>
+      )
+    }
+  </head>
+  <body>
+    <Header />
+    <main id="main" class="site-main">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Progressive enhancement: render any ```mermaid code fences client-side. -->
+    <script is:inline>
+      (() => {
+        const blocks = document.querySelectorAll('pre > code.language-mermaid');
+        if (!blocks.length) return;
+
+        blocks.forEach((code) => {
+          const pre = code.parentElement;
+          if (!pre) return;
+          const target = document.createElement('pre');
+          target.className = 'mermaid';
+          target.textContent = code.textContent || '';
+          pre.replaceWith(target);
+        });
+
+        import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs').then(
+          ({ default: mermaid }) => {
+            mermaid.initialize({ startOnLoad: false, theme: 'default' });
+            mermaid.run({ querySelector: '.mermaid' });
+          },
+        );
+      })();
+    </script>
+  </body>
+</html>

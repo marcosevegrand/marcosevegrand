@@ -5,6 +5,20 @@ enableRobotsTXT: true
 enableGitInfo: true
 timeZone: "Europe/Lisbon"
 
+# The Astro migration keeps shared sources under ./src (src/data, src/styles).
+# Hugo's mounts are per-component replacements, so re-add the defaults we still
+# use and point data/assets at their new homes. This keeps `hugo` runnable on
+# the migration branch so its output can be compared against Astro's.
+module:
+  mounts:
+    - { source: "content", target: "content" }
+    - { source: "layouts", target: "layouts" }
+    - { source: "archetypes", target: "archetypes" }
+    - { source: "static", target: "static" }
+    - { source: "assets", target: "assets" }
+    - { source: "src/styles", target: "assets/css" }
+    - { source: "src/data", target: "data" }
+
 outputs:
   home:
     - HTML

@@ -325,7 +325,10 @@ h3 { font-size: 1.16rem; }
 
 .content pre code { color: inherit; }
 
-/* syntax highlighting */
+/* Shiki (Astro) highlights with an inline background; keep our softer surface. */
+.content pre.astro-code { background: var(--code-bg) !important; }
+
+/* syntax highlighting (legacy Hugo/Chroma classes, superseded by Shiki) */
 .chroma .c,
 .chroma .c1,
 .chroma .cm,

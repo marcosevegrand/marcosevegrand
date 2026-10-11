@@ -1,24 +1,30 @@
-- title: "AWS Certified AI Practitioner (AIF-C01)"
+- id: "aws-ai-practitioner"
+  order: 1
+  title: "AWS Certified AI Practitioner (AIF-C01)"
   issuer: "Amazon Web Services (AWS)"
   date: "July 2026"
   kind: "certification"
-
-- title: "AWS Certified Cloud Practitioner (CLF-C02)"
+- id: "aws-cloud-practitioner"
+  order: 2
+  title: "AWS Certified Cloud Practitioner (CLF-C02)"
   issuer: "Amazon Web Services (AWS)"
   date: "July 2026"
   kind: "certification"
-
-- title: "English C1 Advanced"
+- id: "english-c1"
+  order: 3
+  title: "English C1 Advanced"
   issuer: "Cambridge Assessment English"
   date: "May 2023"
   kind: "certification"
-
-- title: "AWS Knowledge: Cloud Essentials"
+- id: "aws-cloud-essentials"
+  order: 4
+  title: "AWS Knowledge: Cloud Essentials"
   issuer: "Amazon Web Services (AWS)"
   date: "Jun 2026"
   kind: "badge"
-
-- title: "AWS Knowledge: AI-DLC"
+- id: "aws-ai-dlc"
+  order: 5
+  title: "AWS Knowledge: AI-DLC"
   issuer: "Amazon Web Services (AWS)"
   date: "Jun 2026"
   kind: "badge"

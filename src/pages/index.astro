@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import PostItem from '../components/PostItem.astro';
+import SocialIcon from '../components/SocialIcon.astro';
+import { getCollection } from 'astro:content';
+import { SOCIALS } from '../config';
+import { byDateDesc, postExcerpt } from '../lib/posts';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(byDateDesc).slice(0, 5);
+---
+
+<Base isHome>
+  <section class="hero-block" aria-labelledby="intro-title">
+    <div class="hero-copy">
+      <h1 id="intro-title">Hi.</h1>
+      <div class="intro-copy">
+        <p>This is my personal blog.</p>
+        <p>Cybersecurity and things worth sharing.</p>
+        <p>Consider checking out my <a href="/about/">about me</a> page.</p>
+      </div>
+      <div class="link-row" aria-label="Primary links">
+        {
+          SOCIALS.map((social) => (
+            <a
+              class="social-icon-link"
+              href={social.href}
+              rel="me noopener"
+              target="_blank"
+              aria-label={social.label}
+            >
+              <SocialIcon label={social.label} />
+              <span>{social.label}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="recent-posts-title">
+    <div class="section-heading">
+      <h2 id="recent-posts-title">Recent posts</h2>
+      <a class="section-link" href="/posts/">All posts</a>
+    </div>
+    {
+      posts.length > 0 ? (
+        <div class="post-list compact-list">
+          {posts.map((post) => (
+            <PostItem
+              title={post.data.title}
+              href={`/posts/${post.id}/`}
+              date={post.data.date}
+              tags={post.data.tags}
+              summary={postExcerpt(post)}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="muted">No posts yet.</p>
+      )
+    }
+  </section>
+</Base>
