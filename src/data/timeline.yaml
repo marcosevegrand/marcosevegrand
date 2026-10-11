@@ -5,7 +5,8 @@
   status: "ongoing"
   org: "Biobrassica"
   logo: "/images/biobrassica.jpg"
-  meta: "Part-time · 9 mos"
+  employment: "Part-time"
+  duration: "9 mos"
   location: "Braga, Portugal"
   roles:
     - title: "Technical Liaison"
@@ -32,6 +33,8 @@
   title: "Student Cohort Representative"
   org: "University of Minho"
   logo: "/images/uminho.jpg"
+  duration: "2 mos"
+  location: "Braga, Portugal"
 - id: "tutoring"
   kind: "work"
   order: 3
@@ -49,6 +52,7 @@
   title: "M.Sc. Cybersecurity"
   org: "University of Minho"
   logo: "/images/uminho.jpg"
+  location: "Braga, Portugal"
 - id: "bsc-software-engineering"
   kind: "education"
   order: 5
@@ -58,3 +62,4 @@
   title: "B.Sc. Software Engineering"
   org: "University of Minho"
   logo: "/images/uminho.jpg"
+  location: "Braga, Portugal"

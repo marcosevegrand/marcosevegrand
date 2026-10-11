@@ -46,7 +46,10 @@ const timeline = defineCollection({
     org: z.string(),
     /** Company / institution logo; a monogram placeholder is shown if absent. */
     logo: z.string().optional(),
-    meta: z.string().optional(),
+    /** Employment type, e.g. "Part-time". */
+    employment: z.string().optional(),
+    /** Total time, e.g. "9 mos". */
+    duration: z.string().optional(),
     location: z.string().optional(),
     href: z.url().optional(),
     details: z.array(z.string()).default([]),

@@ -652,23 +652,12 @@ h3 { font-size: 1.16rem; }
   border-color: color-mix(in srgb, var(--accent-interactive) 45%, var(--border));
 }
 
-.timeline-item summary {
-  cursor: pointer;
-  list-style: none;
-}
-
-.timeline-item summary::-webkit-details-marker { display: none; }
-
 .timeline-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.15rem 1rem;
-  align-items: baseline;
+  gap: 0.15rem;
 }
 
 .timeline-when {
-  grid-column: 1;
-  grid-row: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
@@ -681,8 +670,6 @@ h3 { font-size: 1.16rem; }
 .timeline-entry.is-ongoing .timeline-state { color: var(--accent-interactive); }
 
 .timeline-heading {
-  grid-column: 1;
-  grid-row: 2;
   display: flex;
   flex-wrap: wrap;
   gap: 0.1rem 0.55rem;
@@ -696,35 +683,8 @@ h3 { font-size: 1.16rem; }
 
 .timeline-org { color: var(--muted); }
 
-.timeline-arrow {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  align-self: center;
-  color: var(--muted);
-}
-
-.timeline-item[open] .timeline-arrow { transform: rotate(180deg); }
-
-.timeline-details {
-  margin: 0.5rem 1.5rem 0.15rem 0;
-}
-
-.timeline-details > p { margin: 0.3rem 0 0; color: var(--muted); }
-
-.timeline-link {
-  display: inline-block;
-  margin-top: 0.5rem;
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  text-decoration: none;
-}
-
-.timeline-link:hover { color: var(--accent-interactive); }
-
-/* grouped employer entries (multiple roles at one org) */
-.timeline-group-meta {
-  margin: 0;
+/* employment type · total time · location, shown on every entry */
+.timeline-meta {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.76rem;

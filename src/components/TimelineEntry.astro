@@ -8,17 +8,21 @@ interface Props {
 const { entry } = Astro.props;
 
 const roles = entry.data.roles;
-const isGroup = roles.length > 1;
 const primary = roles[0];
 const rest = roles.slice(1);
 
 // Complex entries summarise with their most recent role; simple entries use
 // their own title/date.
-const when = (isGroup ? primary?.date : entry.data.date) ?? entry.data.date;
-const title = (isGroup ? primary?.title : entry.data.title) ?? entry.data.title;
-const status = isGroup ? (primary?.status ?? entry.data.status) : entry.data.status;
+const when = primary?.date ?? entry.data.date;
+const title = primary?.title ?? entry.data.title;
+const status = primary?.status ?? entry.data.status;
 
 const statusLabel = (value?: string) => (value === 'ongoing' ? 'Ongoing' : 'Completed');
+
+// employment type · total time · location, for every entry where known.
+const meta = [entry.data.employment, entry.data.duration, entry.data.location]
+  .filter(Boolean)
+  .join(' · ');
 
 // Placeholder artwork: initials of the org, skipping connector words.
 const SKIP_WORDS = new Set(['of', 'the', 'and', 'at', 'for']);
@@ -27,8 +31,6 @@ function monogram(name: string): string {
   const initials = words.slice(0, 2).map((word) => word[0]);
   return (initials.join('') || name.slice(0, 1)).toUpperCase();
 }
-
-const hasDetails = Boolean(entry.data.meta || entry.data.location || entry.data.details.length);
 ---
 
 <li class:list={['timeline-entry', `is-${entry.data.status}`, `is-${entry.data.kind}`]}>
@@ -37,67 +39,32 @@ const hasDetails = Boolean(entry.data.meta || entry.data.location || entry.data.
   </span>
 
   <div class="timeline-panel">
-    {
-      isGroup ? (
-        <>
-          <details class="timeline-item">
-            <summary class="timeline-row">
-              <span class="timeline-when">
-                <time>{when}</time>
-                <span class="timeline-state">{statusLabel(status)}</span>
-              </span>
-              <span class="timeline-heading">
-                <span class="timeline-title">{title}</span>
-                <span class="timeline-org">{entry.data.org}</span>
-              </span>
-              {hasDetails && (
-                <span class="timeline-arrow" aria-hidden="true">
-                  ⌄
-                </span>
-              )}
-            </summary>
-            {hasDetails && (
-              <div class="timeline-details">
-                {(entry.data.meta || entry.data.location) && (
-                  <p class="timeline-group-meta">
-                    {entry.data.meta}
-                    {entry.data.meta && entry.data.location ? ' · ' : ''}
-                    {entry.data.location}
-                  </p>
-                )}
-                {entry.data.details.map((detail) => (
-                  <p>{detail}</p>
-                ))}
-              </div>
-            )}
-          </details>
+    <div class="timeline-row">
+      <span class="timeline-when">
+        <time>{when}</time>
+        <span class="timeline-state">{statusLabel(status)}</span>
+      </span>
+      <span class="timeline-heading">
+        <span class="timeline-title">{title}</span>
+        <span class="timeline-org">{entry.data.org}</span>
+      </span>
+      {meta && <span class="timeline-meta">{meta}</span>}
+    </div>
 
-          <ul class="subroles">
-            {rest.map((role) => (
-              <li class="subrole">
-                <span class="subrole-title">{role.title}</span>
-                <span class="subrole-meta">
-                  {role.date}
-                  {role.duration ? ` · ${role.duration}` : ''}
-                  {role.employment ? ` · ${role.employment}` : ''}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <div class="timeline-item">
-          <div class="timeline-row">
-            <span class="timeline-when">
-              <time>{when}</time>
-              <span class="timeline-state">{statusLabel(status)}</span>
-            </span>
-            <span class="timeline-heading">
-              <span class="timeline-title">{title}</span>
-              <span class="timeline-org">{entry.data.org}</span>
-            </span>
-          </div>
-        </div>
+    {
+      rest.length > 0 && (
+        <ul class="subroles">
+          {rest.map((role) => (
+            <li class="subrole">
+              <span class="subrole-title">{role.title}</span>
+              <span class="subrole-meta">
+                {role.date}
+                {role.duration ? ` · ${role.duration}` : ''}
+                {role.employment ? ` · ${role.employment}` : ''}
+              </span>
+            </li>
+          ))}
+        </ul>
       )
     }
   </div>
