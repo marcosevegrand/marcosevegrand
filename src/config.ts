@@ -34,7 +34,7 @@ export const SOCIALS: Social[] = [
     href: 'https://profile.hackthebox.com/profile/019ed207-d16a-73ea-b364-93cb385a2cf5',
   },
   { label: 'Credly', href: 'https://www.credly.com/users/marcosevegrand' },
-  { label: 'email', href: 'mailto:contact@marcosev.com' },
+  { label: 'Email', href: 'mailto:contact@marcosev.com' },
 ];
 
 export const MENU: MenuItem[] = [

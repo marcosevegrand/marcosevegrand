@@ -44,6 +44,8 @@ const timeline = defineCollection({
     title: z.string().optional(),
     date: z.string().optional(),
     org: z.string(),
+    /** Company / institution logo; a monogram placeholder is shown if absent. */
+    logo: z.string().optional(),
     meta: z.string().optional(),
     location: z.string().optional(),
     href: z.url().optional(),
