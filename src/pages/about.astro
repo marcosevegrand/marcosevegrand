@@ -2,22 +2,17 @@
 import Base from '../layouts/Base.astro';
 import ContactIcon from '../components/ContactIcon.astro';
 import CertificationLibrary from '../components/CertificationLibrary.astro';
+import TimelineEntry from '../components/TimelineEntry.astro';
 import { getCollection } from 'astro:content';
 import { SOCIALS, SITE } from '../config';
 
-const timeline = (await getCollection('timeline')).sort(
+const entries = (await getCollection('timeline')).sort(
   (a, b) => (b.data.start ?? '').localeCompare(a.data.start ?? '') || a.data.order - b.data.order,
 );
 
-const statusLabel = (status?: string) => (status === 'ongoing' ? 'Ongoing' : 'Completed');
-
-// Placeholder artwork: initials of the org, skipping connector words.
-const SKIP_WORDS = new Set(['of', 'the', 'and', 'at', 'for']);
-function monogram(name: string): string {
-  const words = name.split(/[\s-]+/).filter((word) => word && !SKIP_WORDS.has(word.toLowerCase()));
-  const initials = words.slice(0, 2).map((word) => word[0]);
-  return (initials.join('') || name.slice(0, 1)).toUpperCase();
-}
+const experience = entries.filter((entry) => entry.data.kind === 'work' && entry.data.featured);
+const education = entries.filter((entry) => entry.data.kind === 'education');
+const linkedIn = SOCIALS.find((social) => social.label === 'LinkedIn')?.href;
 ---
 
 <Base title="About" description="A short introduction to Marco Sèvegrand.">
@@ -70,93 +65,31 @@ function monogram(name: string): string {
 
         <section class="section-block timeline-section">
           <div class="section-heading">
-            <p class="section-label">Experience &amp; Education</p>
+            <p class="section-label">Experience</p>
           </div>
 
           <ol class="timeline">
-            {
-              timeline.map((entry) => {
-                const roles = entry.data.roles;
-                const isGroup = roles.length > 1;
-                const primary = roles[0];
-                const rest = roles.slice(1);
-                const collapsed = rest.filter((role) => role.collapsed).length;
-                const main = isGroup && primary ? primary : entry.data;
+            {experience.map((entry) => <TimelineEntry entry={entry} />)}
+          </ol>
 
-                return (
-                  <li class:list={['timeline-entry', `is-${entry.data.status}`, `is-${entry.data.kind}`]}>
-                    <span class="timeline-logo" aria-hidden="true">
-                      {entry.data.logo ? (
-                        <img src={entry.data.logo} alt="" loading="lazy" />
-                      ) : (
-                        monogram(entry.data.org)
-                      )}
-                    </span>
+          {
+            linkedIn && (
+              <p class="section-cta">
+                <a href={linkedIn} target="_blank" rel="noopener">
+                  See the full experience on LinkedIn ↗
+                </a>
+              </p>
+            )
+          }
+        </section>
 
-                    <div class="timeline-panel">
-                      <details class="timeline-item">
-                        <summary>
-                          <span class="timeline-when">
-                            <time>{main.date}</time>
-                            <span class="timeline-state">{statusLabel(main.status)}</span>
-                          </span>
-                          <span class="timeline-heading">
-                            <span class="timeline-title">{main.title}</span>
-                            <span class="timeline-org">{entry.data.org}</span>
-                          </span>
-                          <span class="timeline-arrow" aria-hidden="true">
-                            ⌄
-                          </span>
-                        </summary>
+        <section class="section-block timeline-section">
+          <div class="section-heading">
+            <p class="section-label">Education</p>
+          </div>
 
-                        <div class="timeline-details">
-                          {isGroup ? (
-                            <>
-                              {(entry.data.meta || entry.data.location) && (
-                                <p class="timeline-group-meta">
-                                  {entry.data.meta}
-                                  {entry.data.meta && entry.data.location ? ' · ' : ''}
-                                  {entry.data.location}
-                                </p>
-                              )}
-                              <ul class="role-list" data-role-list>
-                                {rest.map((role) => (
-                                  <li class:list={['role', role.collapsed && 'is-collapsed']}>
-                                    <p class="role-title">{role.title}</p>
-                                    <p class="role-meta">
-                                      <time>{role.date}</time>
-                                      {role.duration && <span>{role.duration}</span>}
-                                      {role.employment && <span>{role.employment}</span>}
-                                      <span class:list={['role-state', `is-${role.status}`]}>
-                                        {statusLabel(role.status)}
-                                      </span>
-                                    </p>
-                                    {role.details.map((detail) => (
-                                      <p class="role-detail">{detail}</p>
-                                    ))}
-                                  </li>
-                                ))}
-                              </ul>
-                              {collapsed > 0 && (
-                                <button
-                                  type="button"
-                                  class="role-toggle"
-                                  data-role-toggle
-                                  data-count={collapsed}>
-                                  Show {collapsed} more role{collapsed > 1 ? 's' : ''}
-                                </button>
-                              )}
-                            </>
-                          ) : (
-                            entry.data.details.map((detail) => <p>{detail}</p>)
-                          )}
-                        </div>
-                      </details>
-                    </div>
-                  </li>
-                );
-              })
-            }
+          <ol class="timeline">
+            {education.map((entry) => <TimelineEntry entry={entry} />)}
           </ol>
         </section>
 

@@ -781,6 +781,19 @@ h3 { font-size: 1.16rem; }
 
 .role-toggle:hover { color: var(--accent-interactive); }
 
+.section-cta {
+  margin: 1.1rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.section-cta a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.section-cta a:hover { color: var(--accent-interactive); }
+
 .search-panel {
   display: grid;
   gap: 0.5rem;

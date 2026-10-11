@@ -36,6 +36,8 @@ const timeline = defineCollection({
   schema: z.object({
     kind: z.enum(['work', 'education']),
     order: z.number().default(0),
+    /** Featured entries appear in the site's curated Experience list. */
+    featured: z.boolean().default(true),
     /** Sort key (YYYY-MM); entries are shown newest first. */
     start: z.string().optional(),
     status: z.enum(['ongoing', 'completed']).default('completed'),
