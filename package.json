@@ -8,7 +8,8 @@
     "dev": "astro dev",
     "build": "astro build && sh scripts/pagefind.sh",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "credly": "bun run scripts/fetch-credly.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

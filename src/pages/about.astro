@@ -1,14 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import ContactIcon from '../components/ContactIcon.astro';
+import CertificationLibrary from '../components/CertificationLibrary.astro';
 import { getCollection } from 'astro:content';
 import { SOCIALS, CONTACTS } from '../config';
 
-const timeline = (await getCollection('timeline')).sort((a, b) => a.data.order - b.data.order);
-const certifications = (await getCollection('certifications')).sort((a, b) => a.data.order - b.data.order);
-
-const certs = certifications.filter((entry) => entry.data.kind === 'certification');
-const badges = certifications.filter((entry) => entry.data.kind === 'badge');
+const timeline = (await getCollection('timeline')).sort(
+  (a, b) => (b.data.start ?? '').localeCompare(a.data.start ?? '') || a.data.order - b.data.order,
+);
 ---
 
 <Base title="About" description="A short introduction to Marco Sèvegrand.">
@@ -69,63 +68,48 @@ const badges = certifications.filter((entry) => entry.data.kind === 'badge');
           <div class="section-heading">
             <p class="section-label">Experience &amp; Education</p>
           </div>
-          <div class="timeline-list">
+
+          <ol class="timeline">
             {
               timeline.map((item) => (
-                <details class="timeline-item">
-                  <summary>
-                    <span class="timeline-line">
-                      <span class="timeline-date">{item.data.date}</span>{' '}
-                      <span class="timeline-title">{item.data.title}</span>{' '}
-                      <span class="timeline-at">at</span>{' '}
-                      <span class="timeline-org-inline">{item.data.org}</span>
-                    </span>
-                    <span class="timeline-arrow" aria-hidden="true">
-                      ⌄
-                    </span>
-                  </summary>
-                  <div class="timeline-details">
-                    {item.data.details.map((detail) => (
-                      <p>{detail}</p>
-                    ))}
+                <li class:list={['timeline-entry', `is-${item.data.status}`, `is-${item.data.kind}`]}>
+                  <span class="timeline-node" aria-hidden="true" />
+                  <div class="timeline-panel">
+                    <details class="timeline-item">
+                      <summary>
+                        <span class="timeline-when">
+                          <time>{item.data.date}</time>
+                          <span class="timeline-state">
+                            {item.data.status === 'ongoing' ? 'Ongoing' : 'Completed'}
+                          </span>
+                        </span>
+                        <span class="timeline-heading">
+                          <span class="timeline-title">{item.data.title}</span>
+                          <span class="timeline-org">{item.data.org}</span>
+                        </span>
+                        <span class="timeline-arrow" aria-hidden="true">
+                          ⌄
+                        </span>
+                      </summary>
+                      <div class="timeline-details">
+                        {item.data.details.map((detail) => (
+                          <p>{detail}</p>
+                        ))}
+                        {item.data.href && (
+                          <a class="timeline-link" href={item.data.href} target="_blank" rel="noopener">
+                            {item.data.org} ↗
+                          </a>
+                        )}
+                      </div>
+                    </details>
                   </div>
-                </details>
+                </li>
               ))
             }
-          </div>
+          </ol>
         </section>
 
-        {
-          certs.length > 0 && (
-            <section class="section-block certifications-section">
-              <div class="section-heading">
-                <p class="section-label">Certifications</p>
-              </div>
-              <ul class="certification-list">
-                {certs.map((cert) => (
-                  <li>
-                    <strong>{cert.data.title}</strong>
-                    <span class="cert-detail">
-                      {cert.data.issuer}, {cert.data.date}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {badges.length > 0 && (
-                <p class="badges-line">
-                  AWS Badges in:{' '}
-                  {badges.map((badge, index) => (
-                    <>
-                      {index > 0 && ', '}
-                      {badge.data.title.replace('AWS Knowledge: ', '')}
-                    </>
-                  ))}
-                </p>
-              )}
-            </section>
-          )
-        }
+        <CertificationLibrary />
       </div>
     </div>
   </article>

@@ -36,7 +36,7 @@ const { name, posts } = Astro.props;
       posts.map((post) => (
         <PostItem
           title={post.data.title}
-          href={`/posts/${post.id}/`}
+          href={`/blog/${post.id}/`}
           date={post.data.date}
           tags={post.data.tags}
           summary={postExcerpt(post)}

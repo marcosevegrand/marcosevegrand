@@ -40,7 +40,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(byD
   <section class="section-block" aria-labelledby="recent-posts-title">
     <div class="section-heading">
       <h2 id="recent-posts-title">Recent posts</h2>
-      <a class="section-link" href="/posts/">All posts</a>
+      <a class="section-link" href="/blog/">All posts</a>
     </div>
     {
       posts.length > 0 ? (
@@ -48,7 +48,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(byD
           {posts.map((post) => (
             <PostItem
               title={post.data.title}
-              href={`/posts/${post.id}/`}
+              href={`/blog/${post.id}/`}
               date={post.data.date}
               tags={post.data.tags}
               summary={postExcerpt(post)}

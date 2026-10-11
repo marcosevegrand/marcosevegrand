@@ -21,6 +21,8 @@ const timeline = defineCollection({
   schema: z.object({
     kind: z.enum(['work', 'education']),
     order: z.number().default(0),
+    start: z.string().optional(),
+    status: z.enum(['ongoing', 'completed']).default('completed'),
     date: z.string(),
     title: z.string(),
     org: z.string(),
@@ -32,11 +34,17 @@ const timeline = defineCollection({
 const certifications = defineCollection({
   loader: file('./src/data/certifications.yaml'),
   schema: z.object({
+    order: z.number().default(0),
     title: z.string(),
     issuer: z.string(),
     date: z.string(),
     kind: z.enum(['certification', 'badge']),
-    order: z.number().default(0),
+    /** Credly badge id, when the certificate is also published on Credly. */
+    credly: z.string().optional(),
+    /** Badge artwork (usually the Credly CDN image). */
+    image: z.url().optional(),
+    /** Canonical verification link (usually the public Credly badge page). */
+    href: z.url().optional(),
   }),
 });
 

@@ -10,6 +10,11 @@ export default defineConfig({
   // cv/, images/, favicon.svg, CNAME, etc. (./public is gitignored.)
   publicDir: './static',
   trailingSlash: 'ignore',
+  // The blog route moved from /posts/ to /blog/. Keep old links working.
+  redirects: {
+    '/posts': '/blog',
+    '/posts/[slug]': '/blog/[slug]',
+  },
   integrations: [sitemap()],
   markdown: {
     // Astro 7's default "sätteri" processor adds heading IDs (and exposes them

@@ -1,6 +1,8 @@
 - id: "biobrassica"
   order: 1
   kind: "work"
+  start: "2026-02"
+  status: "ongoing"
   date: "Feb 2026 to Present"
   title: "Store Associate & Web Developer"
   org: "Biobrassica"
@@ -10,6 +12,8 @@
 - id: "tutoring"
   order: 2
   kind: "work"
+  start: "2025-09"
+  status: "ongoing"
   date: "Sept 2025 to Present"
   title: "Math & Physics Tutor"
   org: "Self-employed"
@@ -18,6 +22,8 @@
 - id: "msc-cybersecurity"
   order: 3
   kind: "education"
+  start: "2026-09"
+  status: "ongoing"
   date: "2026 onward"
   title: "M.Sc. Cybersecurity"
   org: "University of Minho"
@@ -27,6 +33,8 @@
 - id: "bsc-software-engineering"
   order: 4
   kind: "education"
+  start: "2023-09"
+  status: "completed"
   date: "Sept 2023 to Jun 2026"
   title: "B.Sc. Software Engineering"
   org: "University of Minho"

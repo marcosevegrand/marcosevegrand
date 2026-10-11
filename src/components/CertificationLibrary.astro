@@ -1,0 +1,160 @@
+---
+import { getCollection } from 'astro:content';
+
+const certifications = (await getCollection('certifications')).sort((a, b) => a.data.order - b.data.order);
+
+// Short labels for the filter chips; falls back to the full issuer name.
+const ISSUER_LABELS: Record<string, string> = {
+  'Amazon Web Services (AWS)': 'AWS',
+  'Cambridge Assessment English': 'Cambridge',
+};
+const labelFor = (issuer: string) => ISSUER_LABELS[issuer] ?? issuer;
+
+const issuers = [...new Set(certifications.map((entry) => entry.data.issuer))];
+const hasBadges = certifications.some((entry) => entry.data.kind === 'badge');
+---
+
+<section class="section-block certifications-section" data-cert-library>
+  <div class="section-heading">
+    <p class="section-label">Certifications</p>
+  </div>
+
+  <div class="cert-controls">
+    <div class="cert-filter-group" role="group" aria-label="Filter by issuer">
+      <button type="button" class="cert-chip is-active" data-cert-issuer="" aria-pressed="true">All</button>
+      {
+        issuers.map((issuer) => (
+          <button type="button" class="cert-chip" data-cert-issuer={issuer} aria-pressed="false">
+            {labelFor(issuer)}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="cert-filter-group" role="group" aria-label="Filter by type">
+      <button type="button" class="cert-chip is-active" data-cert-kind="" aria-pressed="true">All</button>
+      <button type="button" class="cert-chip" data-cert-kind="certification" aria-pressed="false">
+        Certifications
+      </button>
+      {hasBadges && (
+        <button type="button" class="cert-chip" data-cert-kind="badge" aria-pressed="false">
+          Badges
+        </button>
+      )}
+    </div>
+
+    <input
+      type="search"
+      class="cert-search"
+      placeholder="Search certifications"
+      autocomplete="off"
+      aria-label="Search certifications"
+      data-cert-search
+    />
+  </div>
+
+  <ul class="cert-grid">
+    {
+      certifications.map((entry) => {
+        const { title, issuer, date, kind, image, href } = entry.data;
+        const CardTag = href ? 'a' : 'div';
+        return (
+          <li>
+            <CardTag
+              class="cert-card"
+              href={href}
+              target={href ? '_blank' : undefined}
+              rel={href ? 'noopener' : undefined}
+              data-issuer={issuer}
+              data-kind={kind}
+              data-search={`${title} ${issuer}`.toLowerCase()}
+            >
+              <div class="cert-card-media">
+                {image ? (
+                  <img src={image} alt="" loading="lazy" decoding="async" />
+                ) : (
+                  <span class="cert-card-monogram" aria-hidden="true">
+                    {labelFor(issuer)}
+                  </span>
+                )}
+              </div>
+              <div class="cert-card-body">
+                <p class="cert-card-kind">{kind === 'badge' ? 'Badge' : 'Certification'}</p>
+                <h3 class="cert-card-title">{title}</h3>
+                <p class="cert-card-meta">
+                  {issuer} · {date}
+                </p>
+              </div>
+              {href && (
+                <span class="cert-card-link" aria-hidden="true">
+                  ↗
+                </span>
+              )}
+            </CardTag>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <p class="muted cert-empty" data-cert-empty hidden>No certifications match your filters.</p>
+</section>
+
+<script>
+  const library = document.querySelector<HTMLElement>('[data-cert-library]');
+
+  if (library) {
+    const cards = Array.from(library.querySelectorAll<HTMLElement>('.cert-card'));
+    const search = library.querySelector<HTMLInputElement>('[data-cert-search]');
+    const empty = library.querySelector<HTMLElement>('[data-cert-empty]');
+    const issuerButtons = Array.from(library.querySelectorAll<HTMLButtonElement>('[data-cert-issuer]'));
+    const kindButtons = Array.from(library.querySelectorAll<HTMLButtonElement>('[data-cert-kind]'));
+
+    let issuer = '';
+    let kind = '';
+    let query = '';
+
+    const apply = () => {
+      let visible = 0;
+      for (const card of cards) {
+        const show =
+          (!issuer || card.dataset.issuer === issuer) &&
+          (!kind || card.dataset.kind === kind) &&
+          (!query || (card.dataset.search ?? '').includes(query));
+        const item = card.closest('li');
+        if (item) item.hidden = !show;
+        if (show) visible += 1;
+      }
+      if (empty) empty.hidden = visible > 0;
+    };
+
+    const setActive = (buttons: HTMLButtonElement[], active: HTMLButtonElement) => {
+      for (const button of buttons) {
+        const on = button === active;
+        button.classList.toggle('is-active', on);
+        button.setAttribute('aria-pressed', String(on));
+      }
+    };
+
+    for (const button of issuerButtons) {
+      button.addEventListener('click', () => {
+        issuer = button.dataset.certIssuer ?? '';
+        setActive(issuerButtons, button);
+        apply();
+      });
+    }
+
+    for (const button of kindButtons) {
+      button.addEventListener('click', () => {
+        kind = button.dataset.certKind ?? '';
+        setActive(kindButtons, button);
+        apply();
+      });
+    }
+
+    search?.addEventListener('input', () => {
+      query = (search.value ?? '').trim().toLowerCase();
+      apply();
+    });
+  }
+</script>

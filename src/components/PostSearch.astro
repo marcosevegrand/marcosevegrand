@@ -23,7 +23,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(byD
       posts.map((post) => (
         <PostItem
           title={post.data.title}
-          href={`/posts/${post.id}/`}
+          href={`/blog/${post.id}/`}
           date={post.data.date}
           tags={post.data.tags}
           summary={postExcerpt(post)}

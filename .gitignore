@@ -1,15 +1,13 @@
+# Node / Astro
 node_modules/
-.dist/
 dist/
 .astro/
-.vercel/
+
+# Local env
 .env
 *local*
-build/
-public/
-resources/
-.hugo_build.lock
-.svelte-kit/
+
+# LaTeX build artifacts for the resume
 static/cv/*.aux
 static/cv/*.log
 static/cv/*.out
