@@ -12,17 +12,20 @@ const primary = roles[0];
 const rest = roles.slice(1);
 
 // Complex entries summarise with their most recent role; simple entries use
-// their own title/date.
-const when = primary?.date ?? entry.data.date;
-const title = primary?.title ?? entry.data.title;
-const status = primary?.status ?? entry.data.status;
+// their own title/date/meta.
+const main = primary ?? entry.data;
+const when = main.date ?? entry.data.date;
+const title = main.title ?? entry.data.title;
+const status = main.status ?? entry.data.status;
 
 const statusLabel = (value?: string) => (value === 'ongoing' ? 'Ongoing' : 'Completed');
 
-// employment type · total time · location, for every entry where known.
-const meta = [entry.data.employment, entry.data.duration, entry.data.location]
-  .filter(Boolean)
-  .join(' · ');
+// employment type · total time · style (job location is intentionally omitted)
+type Meta = { employment?: string; duration?: string; style?: string };
+const metaOf = (value: Meta) =>
+  [value.employment, value.duration, value.style].filter(Boolean).join(' · ');
+
+const meta = metaOf(main);
 
 // Placeholder artwork: initials of the org, skipping connector words.
 const SKIP_WORDS = new Set(['of', 'the', 'and', 'at', 'for']);
@@ -58,9 +61,7 @@ function monogram(name: string): string {
             <li class="subrole">
               <span class="subrole-title">{role.title}</span>
               <span class="subrole-meta">
-                {role.date}
-                {role.duration ? ` · ${role.duration}` : ''}
-                {role.employment ? ` · ${role.employment}` : ''}
+                {[role.date, metaOf(role)].filter(Boolean).join(' · ')}
               </span>
             </li>
           ))}

@@ -24,8 +24,12 @@ const role = z.object({
   title: z.string(),
   date: z.string(),
   status: z.enum(['ongoing', 'completed']).default('completed'),
+  /** Total time in the role, e.g. "9 mos". */
   duration: z.string().optional(),
+  /** Work type: part-time, full-time, internship, volunteering, ... */
   employment: z.string().optional(),
+  /** Work style: on-site, hybrid, remote. */
+  style: z.string().optional(),
   details: z.array(z.string()).default([]),
 });
 
@@ -50,7 +54,8 @@ const timeline = defineCollection({
     employment: z.string().optional(),
     /** Total time, e.g. "9 mos". */
     duration: z.string().optional(),
-    location: z.string().optional(),
+    /** Work style: on-site, hybrid, remote. */
+    style: z.string().optional(),
     href: z.url().optional(),
     details: z.array(z.string()).default([]),
     roles: z.array(role).default([]),
