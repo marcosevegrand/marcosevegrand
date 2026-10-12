@@ -72,8 +72,8 @@ const certifications = defineCollection({
     kind: z.enum(['certification', 'badge']),
     /** Credly badge id, when the certificate is also published on Credly. */
     credly: z.string().optional(),
-    /** Badge artwork (usually the Credly CDN image). */
-    image: z.url().optional(),
+    /** Artwork: a Credly CDN URL or a local asset path (e.g. "/images/x.png"). */
+    image: z.string().optional(),
     /** Canonical verification link (usually the public Credly badge page). */
     href: z.url().optional(),
   }),

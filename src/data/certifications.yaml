@@ -20,12 +20,14 @@
   issuer: "Cambridge Assessment English"
   date: "May 2023"
   kind: "certification"
+  image: "/images/cambridge.png"
 - id: "learning-kubernetes"
   order: 4
   title: "Learning Kubernetes"
   issuer: "LinkedIn"
   date: "Feb 2026"
   kind: "certification"
+  image: "/images/linkedin.png"
 - id: "aws-cloud-essentials"
   order: 5
   title: "AWS Knowledge: Cloud Essentials"
