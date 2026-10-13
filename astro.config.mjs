@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { satteri } from '@astrojs/markdown-satteri';
+import { markdownPlugins } from './src/lib/markdown-plugins.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,10 +19,11 @@ export default defineConfig({
   },
   integrations: [sitemap()],
   markdown: {
-    // Astro 7's default "sätteri" processor adds heading IDs (and exposes them
-    // via render()'s `headings`) out of the box, so no rehype-slug is needed.
-    // `math` is excluded by default; add `mermaid` so those fences pass through
-    // untouched for the client-side renderer (see Base.astro).
+    // Sätteri is Astro's native Markdown pipeline. Our HAST plugins add code
+    // chrome, figure captions, scrollable tables and callouts (see
+    // src/lib/markdown-plugins.mjs). Heading IDs come from the processor, and
+    // `mermaid`/`math` fences pass through untouched for the client renderer.
+    processor: satteri({ hastPlugins: markdownPlugins }),
     syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
     shikiConfig: {
       theme: 'github-light',

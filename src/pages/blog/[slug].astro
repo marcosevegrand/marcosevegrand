@@ -5,7 +5,7 @@ import { formatDate } from '../../config';
 import { tagSlug } from '../../lib/posts';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
   return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
@@ -49,8 +49,8 @@ const showToc = (entry.data.toc ?? true) && toc.length > 0;
 
     {
       showToc && (
-        <aside class="toc" aria-label="Table of contents">
-          <p>On this page</p>
+        <details class="toc">
+          <summary>On this page</summary>
           <ul>
             {toc.map((heading) => (
               <li class:list={[`toc-depth-${heading.depth}`]}>
@@ -58,7 +58,7 @@ const showToc = (entry.data.toc ?? true) && toc.length > 0;
               </li>
             ))}
           </ul>
-        </aside>
+        </details>
       )
     }
 
@@ -66,4 +66,127 @@ const showToc = (entry.data.toc ?? true) && toc.length > 0;
       <Content />
     </div>
   </article>
+
+  <script>
+    // Progressive enhancements for articles: section links, copy buttons,
+    // click-to-zoom images, and client-rendered Mermaid diagrams.
+    const root = document.querySelector<HTMLElement>('.content');
+    if (root) {
+      addHeadingAnchors(root);
+      addCopyButtons(root);
+      addImageZoom(root);
+      renderMermaid(root);
+    }
+
+    function addHeadingAnchors(scope: HTMLElement) {
+      for (const heading of scope.querySelectorAll<HTMLElement>('h2[id], h3[id]')) {
+        const anchor = document.createElement('a');
+        anchor.className = 'heading-anchor';
+        anchor.href = `#${heading.id}`;
+        anchor.setAttribute('aria-label', 'Link to this section');
+        anchor.textContent = '#';
+        heading.append(anchor);
+      }
+    }
+
+    function addCopyButtons(scope: HTMLElement) {
+      for (const button of scope.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+        const label = button.textContent ?? 'Copy';
+        button.addEventListener('click', async () => {
+          const pre = button.closest('.code-block')?.querySelector('pre');
+          if (!pre) return;
+          try {
+            await navigator.clipboard.writeText((pre.textContent ?? '').replace(/\n$/, ''));
+            button.textContent = 'Copied';
+            button.classList.add('is-copied');
+            window.setTimeout(() => {
+              button.textContent = label;
+              button.classList.remove('is-copied');
+            }, 1600);
+          } catch {
+            /* Clipboard blocked; leave the code selectable by hand. */
+          }
+        });
+      }
+    }
+
+    function addImageZoom(scope: HTMLElement) {
+      const links = Array.from(scope.querySelectorAll<HTMLAnchorElement>('a.image-zoom'));
+      if (links.length === 0) return;
+
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox';
+      overlay.hidden = true;
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      const image = document.createElement('img');
+      overlay.append(image);
+      document.body.append(overlay);
+
+      const close = () => {
+        overlay.hidden = true;
+        image.removeAttribute('src');
+      };
+      const open = (link: HTMLAnchorElement) => {
+        const src = link.getAttribute('href');
+        if (!src) return;
+        image.src = src;
+        image.alt = link.querySelector('img')?.getAttribute('alt') ?? '';
+        overlay.hidden = false;
+      };
+
+      for (const link of links) {
+        link.addEventListener('click', (event) => {
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          open(link);
+        });
+      }
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !overlay.hidden) close();
+      });
+    }
+
+    function renderMermaid(scope: HTMLElement) {
+      const fences = scope.querySelectorAll<HTMLElement>('pre > code.language-mermaid');
+      if (fences.length === 0) return;
+
+      fences.forEach((code) => {
+        const pre = code.parentElement;
+        if (!pre) return;
+        const target = document.createElement('pre');
+        target.className = 'mermaid';
+        target.textContent = code.textContent ?? '';
+        pre.replaceWith(target);
+      });
+
+      // Kept in a variable so neither TypeScript nor Vite resolves the CDN URL
+      // at build time; the diagram module is fetched at runtime.
+      const mermaidUrl = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+      import(/* @vite-ignore */ mermaidUrl)
+        .then(({ default: mermaid }) => {
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'strict',
+            theme: 'base',
+            themeVariables: {
+              fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
+              fontSize: '15px',
+              primaryColor: '#eef0f3',
+              primaryTextColor: '#212529',
+              primaryBorderColor: '#dee2e6',
+              lineColor: '#6c757d',
+              tertiaryColor: '#ffffff',
+              clusterBkg: '#ffffff',
+              clusterBorder: '#dee2e6',
+            },
+          });
+          return mermaid.run({ querySelector: '.mermaid' });
+        })
+        .catch(() => {
+          /* Leave the raw fence text visible if the CDN or a diagram fails. */
+        });
+    }
+  </script>
 </Base>

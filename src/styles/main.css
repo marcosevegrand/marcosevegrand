@@ -15,7 +15,7 @@
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, "Liberation Mono", monospace;
   --wide: 1120px;
-  --read: 860px;
+  --read: 1040px;
 }
 
 * { box-sizing: border-box; }
@@ -261,19 +261,52 @@ h3 { font-size: 1.16rem; }
 .toc {
   max-width: var(--read);
   margin: 1.65rem 0 2rem;
-  padding: 0.9rem 1rem;
   background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
-.toc p {
-  margin: 0 0 0.48rem;
+.toc summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.8rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
 }
 
-.toc ul { margin: 0; padding-left: 1rem; }
-.toc a { text-decoration: none; }
+.toc summary::-webkit-details-marker { display: none; }
+
+.toc summary::before {
+  content: "▸";
+  display: inline-block;
+  color: var(--accent-interactive);
+  transition: transform 120ms ease;
+}
+
+.toc[open] summary::before { transform: rotate(90deg); }
+
+.toc ul {
+  margin: 0;
+  padding: 0 1rem 0.9rem;
+  list-style: none;
+}
+
+.toc li + li { margin-top: 0.28rem; }
+
+/* Sub-sections are indented under their parent section. */
+.toc-depth-3 { margin-left: 1rem; }
+
+.toc a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.toc a:hover { color: var(--accent-interactive); }
 
 .content {
   max-width: var(--read);
@@ -772,6 +805,213 @@ h3 { font-size: 1.16rem; }
 .site-footer a { text-decoration: none; }
 .muted { color: var(--muted); }
 
+/* ------------------------------------------------------------------ *
+ * Article content: code cards, terminal sessions, figures, callouts   *
+ * ------------------------------------------------------------------ */
+
+/* Fenced code -> card with a title bar (dots, language, copy button). */
+.code-block {
+  margin: 1.35rem 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.code-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.42rem 0.85rem;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-dots { display: inline-flex; gap: 0.32rem; }
+
+.code-dot {
+  width: 0.62rem;
+  height: 0.62rem;
+  background: var(--border);
+  border-radius: 50%;
+}
+
+.code-dot:nth-child(1) { background: #e7aca6; }
+.code-dot:nth-child(2) { background: #e6d39c; }
+.code-dot:nth-child(3) { background: #adc9a3; }
+
+.code-lang {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.code-copy {
+  margin-left: auto;
+  padding: 0.14rem 0.55rem;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+.code-copy:hover { color: var(--accent-interactive); border-color: currentColor; }
+.code-copy.is-copied { color: #53734b; border-color: currentColor; }
+
+.code-block pre,
+.content .code-block pre,
+.content .code-block pre.astro-code {
+  margin: 0 !important;
+  padding: 0.95rem 1.05rem !important;
+  overflow-x: auto;
+  color: var(--text);
+  background: var(--surface) !important;
+  border-radius: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* Terminal / shell sessions get a `$` prompt on command lines. */
+.code-block.is-terminal .code-lang { color: var(--accent-interactive); }
+
+.code-block.is-terminal .ln-cmd-auto::before {
+  content: "$ ";
+  color: var(--accent-interactive);
+  user-select: none;
+}
+
+.code-block.is-terminal .ln-cmd { font-weight: 560; }
+.code-block.is-terminal .ln-cmt { font-style: italic; }
+.code-block.is-terminal .ln-out { color: var(--muted); }
+
+/* Command output: muted, dashed pane; pairs with the command above it. */
+.code-block.is-output {
+  background: var(--surface-soft);
+  border-style: dashed;
+}
+
+.content .code-block.is-output pre,
+.content .code-block.is-output pre.astro-code {
+  background: var(--surface-soft) !important;
+  color: var(--muted);
+}
+
+.code-block:has(+ .code-block.is-output) {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.code-block + .code-block.is-output {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Images -> figure with caption. */
+.content figure { margin: 1.7rem 0; }
+
+.image-zoom { display: block; cursor: zoom-in; }
+
+.content figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.figcaption {
+  margin-top: 0.55rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Click-to-zoom overlay. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: rgb(18 20 22 / 0.82);
+  cursor: zoom-out;
+}
+
+.lightbox[hidden] { display: none; }
+
+.lightbox img {
+  width: auto;
+  height: auto;
+  max-width: min(96vw, 1400px);
+  max-height: 92vh;
+  background: var(--surface);
+  border-radius: 6px;
+}
+
+/* Wide tables scroll instead of breaking the column. */
+.table-wrap { margin: 1.2rem 0; overflow-x: auto; }
+.content .table-wrap table { margin: 0; }
+
+/* Callouts: plain cards for blockquotes that open with [!NOTE] and friends. */
+.callout {
+  margin: 1.4rem 0;
+  padding: 0.95rem 1.15rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.callout > :first-child { margin-top: 0; }
+.callout > :last-child { margin-bottom: 0; }
+
+.callout-title {
+  margin: 0 0 0.45rem;
+  color: var(--heading);
+  font-weight: 640;
+  font-size: 0.98rem;
+}
+
+/* Mermaid diagrams. */
+.content pre.mermaid,
+.mermaid {
+  display: block;
+  margin: 1.6rem 0;
+  padding: 1.1rem;
+  overflow-x: auto;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.content pre.mermaid svg { max-width: 100%; height: auto; }
+
+/* Hover anchors on section headings. */
+.content h2,
+.content h3 { position: relative; }
+
+.heading-anchor {
+  margin-left: 0.45rem;
+  color: var(--border);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+}
+
+.content h2:hover .heading-anchor,
+.content h3:hover .heading-anchor,
+.heading-anchor:focus { opacity: 1; }
+
+.heading-anchor:hover { color: var(--accent-interactive); }
+
 @media (max-width: 820px) {
   html { font-size: 17px; }
   .site-header { padding-top: 1.1rem; }
@@ -780,6 +1020,7 @@ h3 { font-size: 1.16rem; }
   .about-grid { grid-template-columns: 1fr; }
   .about-photo { width: fit-content; max-width: min(18rem, 100%); }
   .timeline-details { margin-left: 0; }
+  .code-block pre { font-size: 0.84rem; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
