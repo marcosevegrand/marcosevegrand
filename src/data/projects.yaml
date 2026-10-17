@@ -1,0 +1,61 @@
+# Projects shown on /projects. One card grid with two filters: `kind` (type) and
+# `tags`. `kind` is also the card label: code | tool | coursework | report | writeup | talk
+# The FIRST link becomes the card title; extra links show underneath.
+
+- id: "ssi2526"
+  order: 1
+  title: "e2ee secure messaging software"
+  kind: "coursework"
+  date: "2025/26"
+  grade: "18/20"
+  summary: "End-to-end encrypted messaging system with multi-device identity, offline delivery, group messaging, local history and terminal TUI. Implemented X3DH session bootstrap, symmetric ratcheting, device challenge-response authentication, certificate-based identity binding, and at-rest encryption for client/server secrets."
+  tags: [cybersecurity, cryptography, networking, python]
+  links:
+    - { href: "https://github.com/marcosevegrand/SSI2526", kind: repo }
+
+- id: "cc2526"
+  order: 2
+  title: "space communications protocol"
+  kind: "coursework"
+  date: "2025/26"
+  grade: "19.5/20"
+  summary: "Designed custom TCP and UDP protocols with FEC, fragmentation, ordered delivery, and exponential backoff retransmission. Simulated a mothership-rover mission architecture and built a real-time dashboard validated in CORE under packet loss and latency."
+  tags: [networking, tcp/udp, go, distributed systems]
+  links:
+    - { href: "https://github.com/marcosevegrand/CC2526", kind: repo }
+
+- id: "so2425"
+  order: 3
+  title: "document indexing and search service"
+  kind: "coursework"
+  date: "2024/25"
+  grade: "20/20"
+  summary: "Built a Linux document indexing service around FIFO-based client-server communication with persistent indexing for stateful retrieval. Added an LRU cache and parallel keyword search, with process cleanup and concurrency control for safe multi-document execution."
+  tags: [systems, c, concurrency, ipc]
+  links:
+    - { href: "https://github.com/marcosevegrand/SO2425", kind: repo }
+
+- id: "li42526"
+  order: 4
+  title: "scooter repair shop management system"
+  kind: "coursework"
+  date: "2025/26"
+  grade: "19/20"
+  summary: "Conducted a complete software development lifecycle from requirements through architecture, implementation, testing, and documentation, using structured LLM assistance. Applied a three-pillar methodology of upfront planning, strict modular decomposition, and mandatory human review on every LLM output, explicitly distinguishing the approach from unstructured vibe coding."
+  highlight:
+    text: "Top project and featured at the ES3A Workshop (UMinho)"
+    href: "https://www.linkedin.com/posts/marcosevegrand_softwareengineering-artificialintelligence-activity-7468343488506527744-_MHZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD2_GqoBpuPMHJJ6kA7XgPpRsWb2c9J0n0E"
+  tags: [llms, ai-dlc, react, typescript]
+  links:
+    - { href: "https://github.com/marcosevegrand/LI42526", kind: repo }
+
+- id: "ats2526"
+  order: 5
+  title: "java code analysis and testing"
+  kind: "coursework"
+  date: "2025/26"
+  grade: "18.5/20"
+  summary: "Strengthened two Java applications with unit tests, property-based tests, coverage analysis, mutation testing, and automated test generation. Automated the full quality pipeline with Maven/Make, expanding the suite to 444 tests and achieving PIT mutation scores of 76% and 85% across the two projects."
+  tags: [testing, java, mutation testing, maven]
+  links:
+    - { href: "https://github.com/marcosevegrand/ATS2526", kind: repo }

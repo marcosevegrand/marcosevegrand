@@ -16,9 +16,11 @@ const linkedIn = SOCIALS.find((social) => social.label === 'LinkedIn')?.href;
 ---
 
 <Base title="About" description="A short introduction to Marco Sèvegrand.">
-  <article class="about-layout">
-    <div class="about-grid">
-      <aside class="about-sidebar" aria-label="Photo and contact links">
+  <article class="about">
+    <h1 class="visually-hidden">About</h1>
+
+    <header class="about-head">
+      <div class="about-identity">
         <img
           class="about-photo"
           src="/images/me.png"
@@ -28,7 +30,7 @@ const linkedIn = SOCIALS.find((social) => social.label === 'LinkedIn')?.href;
 
         <p class="about-location">{SITE.location}</p>
 
-        <div class="contact-list">
+        <div class="contact-list" aria-label="Contact links">
           {
             SOCIALS.map((social) => (
               <a class="contact-link" href={social.href} rel="me noopener" target="_blank">
@@ -38,63 +40,59 @@ const linkedIn = SOCIALS.find((social) => social.label === 'LinkedIn')?.href;
             ))
           }
         </div>
-      </aside>
-
-      <div class="about-main">
-        <div class="content about-copy">
-          <p>
-            <strong>Software Engineering graduate</strong> now pursuing a <strong
-              >Master's in Cybersecurity</strong
-            >.
-          </p>
-          <p>
-            My core focus is <span class="text-mark">cybersecurity</span> — from application security
-            and applied cryptography to secure software development lifecycles. I also have a solid
-            foundation in <span class="text-mark">infrastructure</span>, <span class="text-mark"
-              >networking</span
-            >
-            and <span class="text-mark">systems architecture</span>, which gives me a well-rounded grasp
-            of how to build and defend systems end-to-end.
-          </p>
-          <p>
-            I use AI to speed up exploration and prototyping, but I don't blind-copy paste. I take full
-            ownership of whatever I ship. Comfortable writing Go and Python when needed.
-          </p>
-          <p>Outside of tech: gym, chess and philosophy are likely my biggest passions.</p>
-        </div>
-
-        <section class="section-block timeline-section">
-          <div class="section-heading">
-            <p class="section-label">Experience</p>
-          </div>
-
-          <ol class="timeline">
-            {experience.map((entry) => <TimelineEntry entry={entry} />)}
-          </ol>
-
-          {
-            linkedIn && (
-              <p class="section-cta">
-                <a href={linkedIn} target="_blank" rel="noopener">
-                  See the full experience on LinkedIn ↗
-                </a>
-              </p>
-            )
-          }
-        </section>
-
-        <section class="section-block timeline-section">
-          <div class="section-heading">
-            <p class="section-label">Education</p>
-          </div>
-
-          <ol class="timeline">
-            {education.map((entry) => <TimelineEntry entry={entry} />)}
-          </ol>
-        </section>
-
-        <CertificationLibrary />
       </div>
-    </div>
+
+      <div class="content about-copy">
+        <p>
+          <strong>Software Engineering graduate</strong> now pursuing a <strong
+            >Master's in Cybersecurity</strong
+          >.
+        </p>
+        <p>
+          I'm focusing on <span class="text-mark">cloud security</span> and expanding my knowledge of
+          cloud-native technologies, with a solid grounding in{' '}
+          <span class="text-mark">infrastructure</span> and{' '}
+          <span class="text-mark">application security</span>. I can architect, build and defend
+          systems end to end.
+        </p>
+        <p>
+          I use AI to speed up exploration and prototyping, but I don't blind-copy paste. I take full
+          ownership of whatever I ship.
+        </p>
+        <p>Outside of tech, it's mostly the gym, chess and philosophy.</p>
+      </div>
+    </header>
+
+    <section class="section-block timeline-section" id="experience">
+      <div class="section-heading">
+        <p class="section-label">Experience</p>
+      </div>
+
+      <ol class="timeline">
+        {experience.map((entry) => <TimelineEntry entry={entry} />)}
+      </ol>
+
+      {
+        linkedIn && (
+          <p class="section-cta">
+            <a href={linkedIn} target="_blank" rel="noopener">
+              See the full experience on LinkedIn ↗
+            </a>
+          </p>
+        )
+      }
+    </section>
+
+    <section class="section-block timeline-section" id="education">
+      <div class="section-heading">
+        <p class="section-label">Education</p>
+      </div>
+
+      <ol class="timeline">
+        {education.map((entry) => <TimelineEntry entry={entry} />)}
+      </ol>
+    </section>
+
+    <CertificationLibrary />
   </article>
 </Base>

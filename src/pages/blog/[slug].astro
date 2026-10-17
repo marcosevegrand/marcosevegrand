@@ -24,27 +24,26 @@ const showToc = (entry.data.toc ?? true) && toc.length > 0;
 >
   <article class="article" data-pagefind-body>
     <header class="article-header">
-      <p class="post-meta">
-        {
-          entry.data.date && (
+      {
+        entry.data.date && (
+          <p class="post-kind">
             <time datetime={entry.data.date.toISOString().slice(0, 10)} data-pagefind-meta="date">
               {formatDate(entry.data.date)}
             </time>
-          )
-        }
-        {
-          entry.data.tags.length > 0 && (
-            <>
-              <span aria-hidden="true">·</span>{' '}
-              {entry.data.tags.map((tag) => (
-                <a href={`/tags/${tagSlug(tag)}/`}>#{tag}</a>
-              ))}
-            </>
-          )
-        }
-      </p>
+          </p>
+        )
+      }
       <h1 data-pagefind-meta="title">{entry.data.title}</h1>
       {entry.data.summary && <p class="lead">{entry.data.summary}</p>}
+      {
+        entry.data.tags.length > 0 && (
+          <p class="post-tags">
+            {entry.data.tags.map((tag) => (
+              <a href={`/tags/${tagSlug(tag)}/`}>#{tag}</a>
+            ))}
+          </p>
+        )
+      }
     </header>
 
     {
@@ -171,15 +170,15 @@ const showToc = (entry.data.toc ?? true) && toc.length > 0;
             securityLevel: 'strict',
             theme: 'base',
             themeVariables: {
-              fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
+              fontFamily: 'Hanken Grotesk Variable, ui-sans-serif, system-ui, sans-serif',
               fontSize: '15px',
-              primaryColor: '#eef0f3',
-              primaryTextColor: '#212529',
-              primaryBorderColor: '#dee2e6',
-              lineColor: '#6c757d',
-              tertiaryColor: '#ffffff',
-              clusterBkg: '#ffffff',
-              clusterBorder: '#dee2e6',
+              primaryColor: '#efe9df',
+              primaryTextColor: '#1c1916',
+              primaryBorderColor: '#e0d8cb',
+              lineColor: '#6f665c',
+              tertiaryColor: '#fffdf9',
+              clusterBkg: '#fffdf9',
+              clusterBorder: '#e0d8cb',
             },
           });
           return mermaid.run({ querySelector: '.mermaid' });

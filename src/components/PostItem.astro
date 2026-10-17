@@ -13,17 +13,8 @@ const { title, href, date, tags = [], summary } = Astro.props;
 ---
 
 <article class="post-item">
-  <div class="post-meta">
-    {date && <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>}
-    {
-      tags.length > 0 && (
-        <>
-          <span aria-hidden="true">·</span>
-          <span>{tags.join(', ')}</span>
-        </>
-      )
-    }
-  </div>
+  {date && <p class="post-kind"><time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time></p>}
   <h3><a href={href}>{title}</a></h3>
-  {summary && <p>{summary}</p>}
+  {summary && <p class="post-summary">{summary}</p>}
+  {tags.length > 0 && <p class="post-tags">{tags.join(' · ')}</p>}
 </article>

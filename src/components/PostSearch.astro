@@ -6,12 +6,12 @@ import { byDateDesc, postExcerpt } from '../lib/posts';
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(byDateDesc);
 ---
 
-<section class="search-panel" aria-labelledby="post-search-title">
-  <label id="post-search-title" for="post-filter">Search posts</label>
+<section class="search-panel">
   <input
     id="post-filter"
     type="search"
-    placeholder="Search title, summary, or tags"
+    placeholder="Search posts"
+    aria-label="Search posts"
     autocomplete="off"
     data-pagefind-search
   />
@@ -81,9 +81,9 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(byD
         .map(
           (item) => `
           <article class="post-item">
-            <div class="post-meta"><time>${escapeHTML(item.meta.date ?? '')}</time></div>
+            <p class="post-kind"><time>${escapeHTML(item.meta.date ?? '')}</time></p>
             <h3><a href="${escapeHTML(item.url)}">${escapeHTML(item.meta.title ?? '')}</a></h3>
-            <p>${item.excerpt}</p>
+            <p class="post-summary">${item.excerpt}</p>
           </article>`,
         )
         .join('');

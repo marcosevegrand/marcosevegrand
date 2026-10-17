@@ -65,8 +65,8 @@ const text = (value) => ({ type: 'text', value });
 const el = (tagName, properties, children = []) => ({ type: 'element', tagName, properties, children });
 
 /**
- * Wrap every fenced code block in a card with a title bar (traffic-light dots,
- * language label, copy button). Shell/console blocks additionally get per-line
+ * Wrap every fenced code block in a titled pane (language label, copy button).
+ * Shell/console blocks additionally get per-line
  * classes so CSS can show a `$` prompt on commands and mute their output.
  */
 export const rehypeCodeBlocks = defineHastPlugin({
@@ -125,11 +125,6 @@ export const rehypeCodeBlocks = defineHastPlugin({
       );
 
       const head = el('div', { className: ['code-head'] }, [
-        el('span', { className: ['code-dots'], ariaHidden: 'true' }, [
-          el('span', { className: ['code-dot'] }),
-          el('span', { className: ['code-dot'] }),
-          el('span', { className: ['code-dot'] }),
-        ]),
         el('span', { className: ['code-lang'] }, [text(label(lang))]),
         el(
           'button',

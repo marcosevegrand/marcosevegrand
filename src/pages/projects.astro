@@ -1,0 +1,176 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.order - b.data.order,
+);
+
+const KIND_LABELS: Record<string, string> = {
+  code: 'Code',
+  tool: 'Tool',
+  coursework: 'Coursework',
+  report: 'Report',
+  writeup: 'Write-up',
+  talk: 'Talk',
+};
+
+const tags = [...new Set(projects.flatMap((project) => project.data.tags))].sort((a, b) =>
+  a.localeCompare(b),
+);
+
+const kinds = [...new Set(projects.map((project) => project.data.kind))];
+
+const isExternal = (href: string) => /^https?:/.test(href);
+---
+
+<Base title="Projects" description="Code, tools, coursework and write-ups by Marco Sèvegrand.">
+  <h1 class="visually-hidden">Projects</h1>
+
+  <section class="project-filters" aria-label="Filter projects">
+    <div class="filter-group" role="group" aria-label="Filter by type">
+      <button type="button" class="kind-chip is-active" data-kind="" aria-pressed="true">All</button>
+      {
+        kinds.map((kind) => (
+          <button type="button" class="kind-chip" data-kind={kind} aria-pressed="false">
+            {KIND_LABELS[kind]}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="filter-group" role="group" aria-label="Filter by tag">
+      <button type="button" class="tag-chip is-active" data-tag="" aria-pressed="true">All</button>
+      {
+        tags.map((tag) => (
+          <button type="button" class="tag-chip" data-tag={tag} aria-pressed="false">
+            {tag}
+          </button>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="project-grid" data-project-grid>
+    {
+      projects.map((project) => {
+        const [primary, ...extra] = project.data.links;
+        return (
+          <article
+            class="project-card"
+            data-kind={project.data.kind}
+            data-tags={project.data.tags.join('|')}
+          >
+            <p class="project-kind">
+              {KIND_LABELS[project.data.kind]}
+              {project.data.date && <> · {project.data.date}</>}
+              {project.data.grade && <> · Grade {project.data.grade}</>}
+            </p>
+            <h2 class="project-title">
+              {primary ? (
+                <a
+                  href={primary.href}
+                  target={isExternal(primary.href) ? '_blank' : undefined}
+                  rel={isExternal(primary.href) ? 'noopener' : undefined}
+                >
+                  {project.data.title} ↗
+                </a>
+              ) : (
+                project.data.title
+              )}
+            </h2>
+            <p class="project-summary">{project.data.summary}</p>
+            {project.data.highlight && (
+              <p class="project-highlight">
+                <a href={project.data.highlight.href} target="_blank" rel="noopener">
+                  {project.data.highlight.text} ↗
+                </a>
+              </p>
+            )}
+            {project.data.tags.length > 0 && (
+              <p class="project-tags">{project.data.tags.join(' · ')}</p>
+            )}
+            {extra.length > 0 && (
+              <ul class="project-links">
+                {extra.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      target={isExternal(link.href) ? '_blank' : undefined}
+                      rel={isExternal(link.href) ? 'noopener' : undefined}
+                    >
+                      {link.label ?? 'Link'} ↗
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        );
+      })
+    }
+  </div>
+
+  <p class="muted project-empty" data-project-empty hidden>No projects match those filters.</p>
+</Base>
+
+<script>
+  const grid = document.querySelector<HTMLElement>('[data-project-grid]');
+
+  if (grid) {
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.project-card'));
+    const kindChips = Array.from(document.querySelectorAll<HTMLElement>('.kind-chip'));
+    const tagChips = Array.from(document.querySelectorAll<HTMLElement>('.tag-chip'));
+    const empty = document.querySelector<HTMLElement>('[data-project-empty]');
+    const selectedTags = new Set<string>();
+    let kind = '';
+
+    const syncChips = () => {
+      for (const chip of kindChips) {
+        const on = (chip.dataset.kind ?? '') === kind;
+        chip.classList.toggle('is-active', on);
+        chip.setAttribute('aria-pressed', String(on));
+      }
+      for (const chip of tagChips) {
+        const tag = chip.dataset.tag ?? '';
+        const on = tag === '' ? selectedTags.size === 0 : selectedTags.has(tag);
+        chip.classList.toggle('is-active', on);
+        chip.setAttribute('aria-pressed', String(on));
+      }
+    };
+
+    const apply = () => {
+      const hasKind = kind !== '';
+      const hasTags = selectedTags.size > 0;
+      let visible = 0;
+      for (const card of cards) {
+        const cardTags = (card.dataset.tags ?? '').split('|').filter(Boolean);
+        const matchesKind = hasKind && card.dataset.kind === kind;
+        const matchesTags = hasTags && cardTags.some((tag) => selectedTags.has(tag));
+        const show = hasKind || hasTags ? matchesKind || matchesTags : true;
+        card.hidden = !show;
+        if (show) visible += 1;
+      }
+      if (empty) empty.hidden = visible > 0;
+    };
+
+    for (const chip of kindChips) {
+      chip.addEventListener('click', () => {
+        kind = chip.dataset.kind ?? '';
+        syncChips();
+        apply();
+      });
+    }
+
+    for (const chip of tagChips) {
+      chip.addEventListener('click', () => {
+        const tag = chip.dataset.tag ?? '';
+        if (!tag) selectedTags.clear();
+        else if (selectedTags.has(tag)) selectedTags.delete(tag);
+        else selectedTags.add(tag);
+        syncChips();
+        apply();
+      });
+    }
+  }
+</script>

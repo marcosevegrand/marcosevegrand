@@ -79,4 +79,34 @@ const certifications = defineCollection({
   }),
 });
 
-export const collections = { posts, timeline, certifications };
+/**
+ * A single outbound link attached to a project (repository, demo, PDF, post…).
+ */
+const projectLink = z.object({
+  /** Shown only on secondary links; the first link is rendered as the title. */
+  label: z.string().optional(),
+  href: z.string(),
+  kind: z.enum(['repo', 'demo', 'post', 'pdf', 'doc']).optional(),
+});
+
+const projects = defineCollection({
+  loader: file('./src/data/projects.yaml'),
+  schema: z.object({
+    order: z.number().default(0),
+    title: z.string(),
+    kind: z.enum(['code', 'tool', 'coursework', 'report', 'writeup', 'talk']),
+    date: z.string().optional(),
+    /** Featured projects are surfaced first within their group. */
+    featured: z.boolean().default(false),
+    summary: z.string(),
+    /** Course/project grade, e.g. "18/20". */
+    grade: z.string().optional(),
+    /** A single linked highlight line, e.g. "Featured at the ES3A Workshop". */
+    highlight: z.object({ text: z.string(), href: z.string() }).optional(),
+    tags: z.array(z.string()).default([]),
+    status: z.enum(['ongoing', 'complete', 'archived']).default('complete'),
+    links: z.array(projectLink).default([]),
+  }),
+});
+
+export const collections = { posts, timeline, certifications, projects };

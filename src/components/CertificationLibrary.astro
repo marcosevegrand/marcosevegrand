@@ -14,7 +14,7 @@ const issuers = [...new Set(certifications.map((entry) => entry.data.issuer))];
 const hasBadges = certifications.some((entry) => entry.data.kind === 'badge');
 ---
 
-<section class="section-block certifications-section" data-cert-library>
+<section class="section-block certifications-section" id="certifications" data-cert-library>
   <div class="section-heading">
     <p class="section-label">Certifications</p>
   </div>

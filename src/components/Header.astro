@@ -23,7 +23,7 @@ const isExternal = (href: string) => href.startsWith('/cv/');
             rel={isExternal(item.href) ? 'noopener' : undefined}
           >
             <span>{item.name}</span>
-            {isExternal(item.href) && <span aria-hidden="true">↗</span>}
+            {isExternal(item.href) && <span aria-hidden="true">↓</span>}
           </a>
         ))
       }

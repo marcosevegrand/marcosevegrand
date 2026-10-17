@@ -39,8 +39,9 @@ export const SOCIALS: Social[] = [
 
 export const MENU: MenuItem[] = [
   { name: 'Blog', href: '/blog', weight: 10 },
-  { name: 'About', href: '/about', weight: 20 },
-  { name: 'Resume', href: '/cv/resume.pdf', weight: 30 },
+  { name: 'Projects', href: '/projects', weight: 20 },
+  { name: 'About', href: '/about', weight: 30 },
+  { name: 'Resume', href: '/cv/resume.pdf', weight: 40 },
 ];
 
 /** Formats a date using the site's configured DD-MM-YYYY pattern. */
