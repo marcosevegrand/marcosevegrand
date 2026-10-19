@@ -11,12 +11,19 @@ const ISSUER_LABELS: Record<string, string> = {
 const labelFor = (issuer: string) => ISSUER_LABELS[issuer] ?? issuer;
 
 const issuers = [...new Set(certifications.map((entry) => entry.data.issuer))];
+const hasCourses = certifications.some((entry) => entry.data.kind === 'course');
 const hasBadges = certifications.some((entry) => entry.data.kind === 'badge');
+
+const KIND_LABELS: Record<string, string> = {
+  certification: 'Certification',
+  course: 'Course',
+  badge: 'Badge',
+};
 ---
 
 <section class="section-block certifications-section" id="certifications" data-cert-library>
   <div class="section-heading">
-    <p class="section-label">Certifications</p>
+    <p class="section-label">Certifications, courses and badges</p>
   </div>
 
   <div class="cert-controls">
@@ -36,6 +43,11 @@ const hasBadges = certifications.some((entry) => entry.data.kind === 'badge');
       <button type="button" class="cert-chip" data-cert-kind="certification" aria-pressed="false">
         Certifications
       </button>
+      {hasCourses && (
+        <button type="button" class="cert-chip" data-cert-kind="course" aria-pressed="false">
+          Courses
+        </button>
+      )}
       {hasBadges && (
         <button type="button" class="cert-chip" data-cert-kind="badge" aria-pressed="false">
           Badges
@@ -46,9 +58,9 @@ const hasBadges = certifications.some((entry) => entry.data.kind === 'badge');
     <input
       type="search"
       class="cert-search"
-      placeholder="Search certifications"
+      placeholder="Search certifications, courses and badges"
       autocomplete="off"
-      aria-label="Search certifications"
+      aria-label="Search certifications, courses and badges"
       data-cert-search
     />
   </div>
@@ -79,7 +91,7 @@ const hasBadges = certifications.some((entry) => entry.data.kind === 'badge');
                 )}
               </div>
               <div class="cert-card-body">
-                <p class="cert-card-kind">{kind === 'badge' ? 'Badge' : 'Certification'}</p>
+                <p class="cert-card-kind">{KIND_LABELS[kind] ?? kind}</p>
                 <h3 class="cert-card-title">{title}</h3>
                 <p class="cert-card-meta">
                   {issuer} · {date}
@@ -97,7 +109,7 @@ const hasBadges = certifications.some((entry) => entry.data.kind === 'badge');
     }
   </ul>
 
-  <p class="muted cert-empty" data-cert-empty hidden>No certifications match your filters.</p>
+  <p class="muted cert-empty" data-cert-empty hidden>No certifications, courses or badges match your filters.</p>
 </section>
 
 <script>

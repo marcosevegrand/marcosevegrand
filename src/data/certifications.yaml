@@ -26,7 +26,7 @@
   title: "Learning Kubernetes"
   issuer: "LinkedIn"
   date: "Feb 2026"
-  kind: "certification"
+  kind: "course"
   image: "/images/linkedin.png"
 - id: "aws-cloud-essentials"
   order: 5
@@ -46,3 +46,12 @@
   credly: "aebd0786-f397-452e-97a4-cdd30e6be775"
   image: "https://images.credly.com/images/ccfa18e3-4f8e-4e23-9e92-c88991e66b5d/blob"
   href: "https://www.credly.com/badges/aebd0786-f397-452e-97a4-cdd30e6be775/public_url"
+- id: "aws-compute"
+  order: 7
+  title: "AWS Knowledge: Compute"
+  issuer: "Amazon Web Services (AWS)"
+  date: "Oct 2026"
+  kind: "badge"
+  credly: "f2d2fba0-d0f3-40a6-a3fe-dc7fb994492d"
+  image: "https://images.credly.com/images/c2d44375-6567-495a-b868-d17828c62872/blob"
+  href: "https://www.credly.com/badges/f2d2fba0-d0f3-40a6-a3fe-dc7fb994492d/public_url"
