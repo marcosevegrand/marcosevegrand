@@ -11,9 +11,11 @@
   order: 2
   title: "AWS Certified Cloud Practitioner (CLF-C02)"
   issuer: "Amazon Web Services (AWS)"
-  date: "July 2026"
+  date: "Oct 2026"
   kind: "certification"
+  credly: "33f276e6-2fa2-47bd-9145-59130efcfd69"
   image: "https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png"
+  href: "https://www.credly.com/badges/33f276e6-2fa2-47bd-9145-59130efcfd69/public_url"
 - id: "english-c1"
   order: 3
   title: "English C1 Advanced"

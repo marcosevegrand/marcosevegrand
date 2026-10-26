@@ -1,8 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { satteri } from '@astrojs/markdown-satteri';
-import { markdownPlugins } from './src/lib/markdown-plugins.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,22 +10,11 @@ export default defineConfig({
   // cv/, images/, favicon.svg, CNAME, etc. (./public is gitignored.)
   publicDir: './static',
   trailingSlash: 'ignore',
-  // The blog route moved from /posts/ to /blog/. Keep old links working.
+  // The bio now lives on the landing page; keep old links working.
   redirects: {
-    '/posts': '/blog',
-    '/posts/[slug]': '/blog/[slug]',
+    '/about': '/',
+    '/blog': '/',
+    '/posts': '/',
   },
   integrations: [sitemap()],
-  markdown: {
-    // Sätteri is Astro's native Markdown pipeline. Our HAST plugins add code
-    // chrome, figure captions, scrollable tables and callouts (see
-    // src/lib/markdown-plugins.mjs). Heading IDs come from the processor, and
-    // `mermaid`/`math` fences pass through untouched for the client renderer.
-    processor: satteri({ hastPlugins: markdownPlugins }),
-    syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
-    shikiConfig: {
-      theme: 'github-light',
-      wrap: false,
-    },
-  },
 });

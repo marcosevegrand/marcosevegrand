@@ -19,9 +19,8 @@ export const SITE = {
   description:
     'Personal website of Marco Sèvegrand, a software engineer focused on cybersecurity, infrastructure, networks and systems architecture.',
   author: 'Marco Sèvegrand',
-  role: 'Software Engineer',
+  role: 'Security Engineer',
   location: 'Braga, Portugal',
-  dateFormat: '02-01-2006',
   resume: '/cv/resume.pdf',
   ogImage: '/og-image.svg',
 } as const;
@@ -38,16 +37,6 @@ export const SOCIALS: Social[] = [
 ];
 
 export const MENU: MenuItem[] = [
-  { name: 'Blog', href: '/blog', weight: 10 },
-  { name: 'Projects', href: '/projects', weight: 20 },
-  { name: 'About', href: '/about', weight: 30 },
-  { name: 'Resume', href: '/cv/resume.pdf', weight: 40 },
+  { name: 'Projects', href: '/projects', weight: 10 },
+  { name: 'Resume', href: '/cv/resume.pdf', weight: 20 },
 ];
-
-/** Formats a date using the site's configured DD-MM-YYYY pattern. */
-export function formatDate(date: Date): string {
-  const day = String(date.getUTCDate()).padStart(2, '0');
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const year = date.getUTCFullYear();
-  return `${day}-${month}-${year}`;
-}

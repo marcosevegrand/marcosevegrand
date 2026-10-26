@@ -6,13 +6,12 @@
   "packageManager": "bun@1.4.3",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && sh scripts/pagefind.sh",
+    "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "credly": "bun run scripts/fetch-credly.ts"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/hanken-grotesk": "^5.3.0",
     "@fontsource/ibm-plex-mono": "^5.3.0",
@@ -20,7 +19,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "pagefind": "^1.5.2",
     "typescript": "^6"
   }
 }

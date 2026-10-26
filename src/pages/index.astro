@@ -1,55 +1,98 @@
 ---
 import Base from '../layouts/Base.astro';
-import PostItem from '../components/PostItem.astro';
+import ContactIcon from '../components/ContactIcon.astro';
+import CertificationLibrary from '../components/CertificationLibrary.astro';
+import TimelineEntry from '../components/TimelineEntry.astro';
 import { getCollection } from 'astro:content';
-import { byDateDesc, postExcerpt } from '../lib/posts';
+import { SOCIALS, SITE } from '../config';
 
-const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(byDateDesc).slice(0, 5);
+const entries = (await getCollection('timeline')).sort(
+  (a, b) => (b.data.start ?? '').localeCompare(a.data.start ?? '') || a.data.order - b.data.order,
+);
+
+const experience = entries.filter((entry) => entry.data.kind === 'work' && entry.data.featured);
+const education = entries.filter((entry) => entry.data.kind === 'education');
+const linkedIn = SOCIALS.find((social) => social.label === 'LinkedIn')?.href;
 ---
 
 <Base isHome>
-  <section class="hero-block" aria-labelledby="intro-title">
-    <div class="hero-copy">
-      <h1 id="intro-title">Hi, I'm Marco.</h1>
-      <div class="intro-copy">
-        <p>
-          I'm a software engineering graduate working on a master's in cybersecurity. This is where I
-          write about security, infrastructure and the things I'm figuring out along the way.
-        </p>
-        <p>
-          There's a bit more <a href="/about/">about me</a> if you're curious, plus my <a
-            href="/about/#experience">experience</a
-          > and <a href="/about/#certifications">certifications, courses and badges</a>. And last but not
-          least, do take a look at my <a href="/projects/">featured projects</a>.
-        </p>
-      </div>
-      <p class="hero-email">
-        The best way to reach me is <a href="mailto:contact@marcosev.com">contact@marcosev.com</a>
-      </p>
-    </div>
-  </section>
+  <article class="about">
+    <header class="about-head">
+      <div class="about-identity">
+        <img
+          class="about-photo"
+          src="/images/me.png"
+          alt="Portrait of Marco Sèvegrand"
+          loading="eager"
+        />
 
-  <section class="section-block" aria-labelledby="recent-posts-title">
-    <div class="section-heading">
-      <h2 id="recent-posts-title">Recent posts</h2>
-      <a class="section-link" href="/blog/">All posts</a>
-    </div>
-    {
-      posts.length > 0 ? (
-        <div class="post-list compact-list">
-          {posts.map((post) => (
-            <PostItem
-              title={post.data.title}
-              href={`/blog/${post.id}/`}
-              date={post.data.date}
-              tags={post.data.tags}
-              summary={postExcerpt(post)}
-            />
-          ))}
+        <p class="about-location">{SITE.location}</p>
+
+        <div class="contact-list" aria-label="Contact links">
+          {
+            SOCIALS.map((social) => (
+              <a class="contact-link" href={social.href} rel="me noopener" target="_blank">
+                <ContactIcon label={social.label} />
+                <span>{social.label}</span>
+              </a>
+            ))
+          }
         </div>
-      ) : (
-        <p class="muted">No posts yet.</p>
-      )
-    }
-  </section>
+      </div>
+
+      <div class="about-copy">
+        <h1>Hi, I'm Marco.</h1>
+        <p>
+          <strong>Software Engineering graduate</strong> now pursuing a <strong
+            >Master's in Cybersecurity</strong
+          >.
+        </p>
+        <p>
+          I'm focusing on <span class="text-mark">cloud security</span> and expanding my knowledge of
+          cloud-native technologies, with a solid grounding in{' '}
+          <span class="text-mark">infrastructure</span> and{' '}
+          <span class="text-mark">application security</span>. My goal is to architect, build and defend
+          systems end to end.
+        </p>
+        <p>
+          I use AI to speed up exploration and prototyping, but I don't blind-copy paste. I take full
+          ownership of whatever I ship. You can see what I've been building on the{' '}
+          <a href="/projects/">projects page</a>.
+        </p>
+        <p>Outside of tech, it's mostly the gym, chess and philosophy podcasts.</p>
+      </div>
+    </header>
+
+    <section class="section-block timeline-section" id="experience">
+      <div class="section-heading">
+        <p class="section-label">Experience</p>
+      </div>
+
+      <ol class="timeline">
+        {experience.map((entry) => <TimelineEntry entry={entry} />)}
+      </ol>
+
+      {
+        linkedIn && (
+          <p class="section-cta">
+            <a href={linkedIn} target="_blank" rel="noopener">
+              See the full experience on LinkedIn ↗
+            </a>
+          </p>
+        )
+      }
+    </section>
+
+    <section class="section-block timeline-section" id="education">
+      <div class="section-heading">
+        <p class="section-label">Education</p>
+      </div>
+
+      <ol class="timeline">
+        {education.map((entry) => <TimelineEntry entry={entry} />)}
+      </ol>
+    </section>
+
+    <CertificationLibrary />
+  </article>
 </Base>

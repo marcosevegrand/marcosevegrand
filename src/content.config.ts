@@ -1,20 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
-import { file, glob } from 'astro/loaders';
-
-const posts = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date().optional(),
-    draft: z.boolean().default(false),
-    tags: z.array(z.string()).default([]),
-    summary: z.string().optional(),
-    description: z.string().optional(),
-    toc: z.boolean().default(true),
-    math: z.boolean().default(false),
-  }),
-});
+import { file } from 'astro/loaders';
 
 /**
  * A single role within a grouped employer entry (e.g. the several roles held at
@@ -109,4 +95,4 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { posts, timeline, certifications, projects };
+export const collections = { timeline, certifications, projects };
